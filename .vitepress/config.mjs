@@ -38,13 +38,4 @@ export default defineConfig({
   themeConfig: {
     sidebar: false,
   },
-  vite: {
-    build: {
-      rollupOptions: {
-        input: {
-          email: 'public/email.html'
-        }
-      }
-    }
-  }
 })
