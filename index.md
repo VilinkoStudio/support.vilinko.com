@@ -23,7 +23,7 @@ features:
   - icon: 📧
     title: 邮箱反馈
     details: 发送详细问题描述至官方邮箱。
-    link: ./public/email.htm
+    link: ./email.htm
   - icon: 📋
     title: 工单查询
     details: 
