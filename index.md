@@ -16,14 +16,14 @@ features:
     title: 常见问题
     details: 我们在这里列举了一些您可能会遇到的问题。
     link: ./docs/index
-  - icon: 📖
-    title: 常见问题
-    details: 我们在这里列举了一些您可能会遇到的问题。
-    link: ./docs/index
+  - icon: 📱
+    title: 微信公众号
+    details: 关注官方微信公众号，获取最新产品资讯和服务支持。
+    link: https://support.vilinko.com/wechat.htm
   - icon: 📧
     title: 邮箱反馈
     details: 发送详细问题描述至官方邮箱。
-    link: ./email.htm
+    link: https://support.vilinko.com/email.htm
   - icon: 📋
     title: 工单查询
     details: 

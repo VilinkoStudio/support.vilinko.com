@@ -16,14 +16,14 @@ features:
     title: Frequently Asked Questions
     details: We have listed some of the problems you may encounter here.
     link: ./en/docs/index
-  - icon: 📖
-    title: 常见问题
-    details: 我们在这里列举了一些您可能会遇到的问题。
-    link: ./docs/index
-  - icon: 📖
-    title: 常见问题
-    details: 我们在这里列举了一些您可能会遇到的问题。
-    link: ./docs/index
+  - icon: 📱
+    title: WeChat public account
+    details: Follow our official WeChat public account to get the latest product information and service support.
+    link: https://support.vilinko.com/wechat.htm
+  - icon: 📧
+    title: Email feedback
+    details: Send a detailed problem description to the official email address.
+    link: https://support.vilinko.com/email.htm
   - icon: 📋
     title: Work order inquiry
     details: 

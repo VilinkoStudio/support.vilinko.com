@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  base: "/support.vilinko.com/",
+  base: "",
   title: "Vilinko Support",
   description: "Vilinko Studio 用户支持中心，提供多种渠道的用户支持方式，帮助解决问题",
   keywords: 'Vilinko Studio,支持,产品,服务,用户,Vilinko,vertillusion,lightframe,lfs,vinaui,vui,support',
