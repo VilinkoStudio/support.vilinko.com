@@ -23,9 +23,9 @@ export default defineConfig({
         lightModeSwitchTitle: '切换到浅色模式',
         darkModeSwitchTitle: '切换到深色模式',
         sidebarMenuLabel: '菜单',
-        outline: { level: [2, 3], label: '目录' },
         returnToTopLabel: '返回顶部',
         docFooter: { prev: '上一篇', next: '下一篇' },
+        onThisPage: '本页内容',
       }
     },
     en: {
@@ -46,9 +46,9 @@ export default defineConfig({
         lightModeSwitchTitle: 'Switch to Light Mode',
         darkModeSwitchTitle: 'Switch to Dark Mode',
         sidebarMenuLabel: 'Menu',
-        outline: { level: [2, 3], label: 'Outline' },
         returnToTopLabel: 'Back to Top',
         docFooter: { prev: 'Previous', next: 'Next' },
+        onThisPage: 'On This Page',
       }
     }
   },
