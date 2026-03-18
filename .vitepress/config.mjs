@@ -5,6 +5,9 @@ export default defineConfig({
   title: "Vilinko Support",
   description: "Vilinko Studio 用户支持中心，提供多种渠道的用户支持方式，帮助解决问题",
   keywords: 'Vilinko Studio,支持,产品,服务,用户,Vilinko,vertillusion,lightframe,lfs,vinaui,vui,support',
+  head: [
+    ['link', { rel: 'icon', type: 'image/png', href: 'https://www.vilinko.com/img/Newico.png' }]
+  ],
   locales: {
     root: {
       label: '简体中文',
@@ -17,7 +20,6 @@ export default defineConfig({
           copyright: 'Copyright © 2019 - 2026 Vilinko Studio. All Rights Reserved.',
           message: '<a href="https://beian.miit.gov.cn/" target="_blank" style="text-decoration: none;">粤ICP备2025454076号</a>'
         },
-        // 添加中英文切换配置
         langMenuLabel: '切换语言',
         darkModeSwitchLabel: '主题',
         lightModeSwitchTitle: '切换到浅色模式',
@@ -40,7 +42,6 @@ export default defineConfig({
           copyright: 'Copyright © 2019 - 2026 Vilinko Studio. All Rights Reserved.',
           message: '<a href="https://beian.miit.gov.cn/" target="_blank" style="text-decoration: none;">粤ICP备2025454076号</a>'
         },
-        // 添加英文配置
         langMenuLabel: 'Switch Language',
         darkModeSwitchLabel: 'Theme',
         lightModeSwitchTitle: 'Switch to Light Mode',
