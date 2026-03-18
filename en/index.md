@@ -8,14 +8,13 @@ hero:
       text: Review the documentation
       link: https://docs.vilinko.com
     - theme: alt
-      text: Intelligent customer service
-      link: https://chatbot.weixin.qq.com/webapp/YlhLCNamNYANq6UY9tQcXUsyHOzPIZ?isFloat=false&robotName=VilinkoBot
-
+      text: QQ Channels
+      link: https://pd.qq.com/s/fnd9tarkb
 features:
   - icon: 📖
     title: Frequently Asked Questions
     details: We have listed some of the problems you may encounter here.
-    link: ./en/docs/index
+    link: ./docs/index
   - icon: 📱
     title: WeChat public account
     details: Follow our official WeChat public account to get the latest product information and service support.

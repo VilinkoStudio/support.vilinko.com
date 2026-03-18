@@ -8,8 +8,8 @@ hero:
       text: 查阅文档
       link: https://docs.vilinko.com
     - theme: alt
-      text: 智能客服
-      link: https://chatbot.weixin.qq.com/webapp/YlhLCNamNYANq6UY9tQcXUsyHOzPIZ?isFloat=false&robotName=VilinkoBot
+      text: 腾讯频道
+      link: https://pd.qq.com/s/fnd9tarkb
 
 features:
   - icon: 📖

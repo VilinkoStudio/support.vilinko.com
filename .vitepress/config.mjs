@@ -16,7 +16,16 @@ export default defineConfig({
         footer: {
           copyright: 'Copyright © 2019 - 2026 Vilinko Studio. All Rights Reserved.',
           message: '<a href="https://beian.miit.gov.cn/" target="_blank" style="text-decoration: none;">粤ICP备2025454076号</a>'
-        }
+        },
+        // 添加中英文切换配置
+        langMenuLabel: '切换语言',
+        darkModeSwitchLabel: '主题',
+        lightModeSwitchTitle: '切换到浅色模式',
+        darkModeSwitchTitle: '切换到深色模式',
+        sidebarMenuLabel: '菜单',
+        outline: { level: [2, 3], label: '目录' },
+        returnToTopLabel: '返回顶部',
+        docFooter: { prev: '上一篇', next: '下一篇' },
       }
     },
     en: {
@@ -30,7 +39,16 @@ export default defineConfig({
         footer: {
           copyright: 'Copyright © 2019 - 2026 Vilinko Studio. All Rights Reserved.',
           message: '<a href="https://beian.miit.gov.cn/" target="_blank" style="text-decoration: none;">粤ICP备2025454076号</a>'
-        }
+        },
+        // 添加英文配置
+        langMenuLabel: 'Switch Language',
+        darkModeSwitchLabel: 'Theme',
+        lightModeSwitchTitle: 'Switch to Light Mode',
+        darkModeSwitchTitle: 'Switch to Dark Mode',
+        sidebarMenuLabel: 'Menu',
+        outline: { level: [2, 3], label: 'Outline' },
+        returnToTopLabel: 'Back to Top',
+        docFooter: { prev: 'Previous', next: 'Next' },
       }
     }
   },
