@@ -51,7 +51,7 @@ Vilinko Studio 提供的鸿蒙应用适用于 HarmonyOS 6 及以上、API ≥ 20
 
 ## 程序安装相关
 ::: details Windows SmartScreen 显示未知程序或显示程序可能含有病毒
-Vilinko Studio 致力于为用户提供安全、可靠的服务。我们的应用程序已通过第三方安全检测平台 [VirScan](https://www.virscan.org) 和 [VirusTotal]([https://www.virustotal.com/gui/) 的全面扫描，结果显示未发现病毒或任何可疑文件行为。鉴于当前资金条件限制，Vilinko Studio 暂未配备代码签名证书，对此可能带来的不便，我们深表歉意。我们将持续提升安全合规能力，在条件成熟后尽快完善相关认证体系，为用户提供更加完善的信任保障。
+Vilinko Studio 致力于为用户提供安全、可靠的服务。我们的应用程序已通过第三方安全检测平台 [VirScan](https://www.virscan.org) 和 [VirusTotal](https://www.virustotal.com/gui/) 的全面扫描，结果显示未发现病毒或任何可疑文件行为。鉴于当前资金条件限制，Vilinko Studio 暂未配备代码签名证书，对此可能带来的不便，我们深表歉意。我们将持续提升安全合规能力，在条件成熟后尽快完善相关认证体系，为用户提供更加完善的信任保障。
 
 [点击此处助力我们提升合规能力](https://afdian.com/a/EnderMo)
 :::

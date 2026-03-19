@@ -52,7 +52,7 @@ If you choose to compile and install using the .hap package, please try changing
 
 ## Program installation related
 ::: details Windows SmartScreen displays an unknown program or that the program may contain a virus
-Vilinko Studio is committed to providing users with safe and reliable services. Our application has undergone a comprehensive scan by the third-party security detection platform [VirScan](https://www.virscan.org) and [VirusTotal]([https://www.virustotal.com/gui/), and the results show no viruses or any suspicious file behaviors. Given the current financial constraints, Vilinko Studio has not yet equipped itself with a code signing certificate. We sincerely apologize for any inconvenience this may cause. We will continue to enhance our security compliance capabilities and, once conditions permit, promptly improve the relevant certification system to provide users with more comprehensive trust assurance.
+Vilinko Studio is committed to providing users with safe and reliable services. Our application has undergone a comprehensive scan by the third-party security detection platform [VirScan](https://www.virscan.org) and [VirusTotal](https://www.virustotal.com/gui/), and the results show no viruses or any suspicious file behaviors. Given the current financial constraints, Vilinko Studio has not yet equipped itself with a code signing certificate. We sincerely apologize for any inconvenience this may cause. We will continue to enhance our security compliance capabilities and, once conditions permit, promptly improve the relevant certification system to provide users with more comprehensive trust assurance.
 
 [Click here to help us improve our compliance capabilities](https://afdian.com/a/EnderMo)
 :::
