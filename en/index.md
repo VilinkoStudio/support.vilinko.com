@@ -6,7 +6,7 @@ hero:
   actions:
     - theme: brand
       text: Review the documentation
-      link: https://docs.vilinko.com
+      link: https://docs.vilinko.com/en/
     - theme: alt
       text: QQ Channels
       link: https://pd.qq.com/s/fnd9tarkb

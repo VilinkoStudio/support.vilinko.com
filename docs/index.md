@@ -6,7 +6,7 @@ next: false
 # 常见问题
 
 ## DLL 文件缺失
-::: details 无法启动程序，因为计算机中丢失 MSVCP140.dll
+::: details 无法启动程序，因为计算机中丢失 MSVCP140.dll（0xc000007b 报错）
 此问题通常是由于缺少 **Microsoft Visual C++ Redistributable** 组件所致。我们为您提供了两种解决方案，若无法解决您的问题，请您尝试在微软社区寻求帮助。
 
 ### 方法一：安装最新的 Microsoft Visual C++ Redistributable
@@ -35,6 +35,16 @@ sfc /scannow
 - 若问题持续存在，建议从微软官方网站获取进一步支持
 :::
 
-::: details 0xc000007b 报错 (找不到 msvcp140.dll 等) 
-下载安装：[https://aka.ms/vs/16/release/vc_redist.x64.exe](https://aka.ms/vs/16/release/vc_redist.x64.exe)
+## Webview 相关
+::: details 运行时缺少 Edge Webview2
+Vilinko Studio 提供的部分程序可能需要 Webview 来运行，若您的电脑上未安装相关 Webview ，可能导致我们的程序无法正常工作。推荐您在 Microsoft 官方网站安装 MicrosoftEdgeWebview2 程序。
+
+https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/#download
+
+:::
+
+## 程序和网页兼容性
+::: details 运行在 HarmonyOS NEXT 系统上出现 API 版本过高运行失败的错误
+Vilinko Studio 提供的鸿蒙应用适用于 HarmonyOS 6 及以上、API ≥ 20 的机型，若您的系统未升级到相关版本，可能无法使用我们的产品，我们推荐您在系统版本为 6.0.0.130 及以上的设备上安装和运行程序。  
+若您选择使用 .hap 包自行编译安装，请尝试更改 `build-profile.json5` 文件中的 `compatibleSdkVersion` 值。
 :::
