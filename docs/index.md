@@ -48,3 +48,10 @@ https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/#download
 Vilinko Studio 提供的鸿蒙应用适用于 HarmonyOS 6 及以上、API ≥ 20 的机型，若您的系统未升级到相关版本，可能无法使用我们的产品，我们推荐您在系统版本为 6.0.0.130 及以上的设备上安装和运行程序。  
 若您选择使用 .hap 包自行编译安装，请尝试更改 `build-profile.json5` 文件中的 `compatibleSdkVersion` 值。
 :::
+
+## 程序安装相关
+::: details Windows SmartScreen 显示未知程序或显示程序可能含有病毒
+Vilinko Studio 致力于为用户提供安全、可靠的服务。我们的应用程序已通过第三方安全检测平台 [VirScan](https://www.virscan.org) 和 [VirusTotal]([https://www.virustotal.com/gui/) 的全面扫描，结果显示未发现病毒或任何可疑文件行为。鉴于当前资金条件限制，Vilinko Studio 暂未配备代码签名证书，对此可能带来的不便，我们深表歉意。我们将持续提升安全合规能力，在条件成熟后尽快完善相关认证体系，为用户提供更加完善的信任保障。
+
+[点击此处助力我们提升合规能力](https://afdian.com/a/EnderMo)
+:::
