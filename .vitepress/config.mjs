@@ -28,7 +28,10 @@ export default defineConfig({
         sidebarMenuLabel: '菜单',
         returnToTopLabel: '返回顶部',
         docFooter: { prev: '上一篇', next: '下一篇' },
-        onThisPage: '本页内容',
+          
+        // 导航和侧边栏
+        nav: createNav('zh'),
+        sidebar: createSidebar('zh'),
       }
     },
     en: {
@@ -52,6 +55,8 @@ export default defineConfig({
         returnToTopLabel: 'Back to Top',
         docFooter: { prev: 'Previous', next: 'Next' },
         onThisPage: 'On This Page',
+        nav: createNav('en'),
+        sidebar: createSidebar('en'),
       }
     }
   },
