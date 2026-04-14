@@ -1,5 +1,11 @@
 import { defineConfig } from 'vitepress'
 
+// 定义 createSidebar 函数，根据语言返回侧边栏配置
+function createSidebar(lang) {
+  // 可根据 lang 返回不同语言的 sidebar，此处先返回空数组作为占位
+  return []
+}
+
 export default defineConfig({
   base: "",
   title: "Vilinko Support",
@@ -30,7 +36,6 @@ export default defineConfig({
         docFooter: { prev: '上一篇', next: '下一篇' },
           
         // 导航和侧边栏
-        nav: createNav('zh'),
         sidebar: createSidebar('zh'),
       }
     },
@@ -55,7 +60,6 @@ export default defineConfig({
         returnToTopLabel: 'Back to Top',
         docFooter: { prev: 'Previous', next: 'Next' },
         onThisPage: 'On This Page',
-        nav: createNav('en'),
         sidebar: createSidebar('en'),
       }
     }
