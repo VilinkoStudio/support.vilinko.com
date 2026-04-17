@@ -29,6 +29,11 @@ This application is compatible with Windows 10 and above.
 - [Windows Arm64](https://down1.vilinko.com/download/pogget_arm64.zip)
 
 ## Vilinko Universe
+
+::: info
+This application is compatible with Windows 10 and above.
+:::
+
 - [Windows X64](https://lightframe.vilinko.com/Update/VilinkoUniverse.exe)
 
 ## Vui.parser

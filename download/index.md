@@ -27,7 +27,7 @@
 ## Vilinko Universe
 
 ::: info 安装提示
-此应用适用于 Windows 7 及以上版本。
+此应用适用于 Windows 10 及以上版本。
 :::
 
 - [Windows X64](https://lightframe.vilinko.com/Update/VilinkoUniverse.exe)
