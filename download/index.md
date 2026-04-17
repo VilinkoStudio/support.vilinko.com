@@ -21,6 +21,10 @@
 
 ## Pogget
 
+::: info 安装提示
+此应用适用于 Windows 10 及以上版本。
+:::
+
 - [Windows X64](https://down1.vilinko.com/download/pogget.zip)
 - [Windows Arm64](https://down1.vilinko.com/download/pogget_arm64.zip)
 
