@@ -1,13 +1,10 @@
 import { defineConfig } from 'vitepress'
 
-const currentYear = (() => {
-  try {
-    return new Date().getFullYear();
-  } catch (e) {
-    console.warn('Failed to get current year', e);
-    return 2026;
-  }
-})();
+function createSidebar(lang) {
+  return []
+}
+
+const currentYear = new Date().getFullYear();
 
 export default defineConfig({
   base: "",
