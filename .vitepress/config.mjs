@@ -1,43 +1,5 @@
 import { defineConfig } from 'vitepress'
 
-// 定义 createSidebar 函数，根据语言返回侧边栏配置
-function createSidebar(lang) {
-  if (lang === 'en') {
-    // 英文版侧边栏
-    return [
-      {
-        text: 'Documentation',
-        items: [
-          { text: 'Introduction', link: '/en/docs/' },
-        ]
-      },
-      {
-        text: 'Downloads',
-        items: [
-          { text: 'Software Download', link: '/en/download/' }
-        ]
-      }
-    ]
-  } else {
-    // 中文版侧边栏（默认）
-    return [
-      {
-        text: '文档',
-        items: [
-          { text: '介绍', link: '/docs/' },
-        ]
-      },
-      {
-        text: '下载',
-        items: [
-          { text: '软件下载', link: '/download/' }
-        ]
-      }
-    ]
-  }
-}
-
-// 获取当前年份，如果获取失败则默认为2026
 const currentYear = (() => {
   try {
     return new Date().getFullYear();
