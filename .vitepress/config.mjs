@@ -2,9 +2,50 @@ import { defineConfig } from 'vitepress'
 
 // 定义 createSidebar 函数，根据语言返回侧边栏配置
 function createSidebar(lang) {
-  // 可根据 lang 返回不同语言的 sidebar，此处先返回空数组作为占位
-  return []
+  if (lang === 'en') {
+    // 英文版侧边栏
+    return [
+      {
+        text: 'Documentation',
+        items: [
+          { text: 'Introduction', link: '/en/docs/' },
+        ]
+      },
+      {
+        text: 'Downloads',
+        items: [
+          { text: 'Software Download', link: '/en/download/' }
+        ]
+      }
+    ]
+  } else {
+    // 中文版侧边栏（默认）
+    return [
+      {
+        text: '文档',
+        items: [
+          { text: '介绍', link: '/docs/' },
+        ]
+      },
+      {
+        text: '下载',
+        items: [
+          { text: '软件下载', link: '/download/' }
+        ]
+      }
+    ]
+  }
 }
+
+// 获取当前年份，如果获取失败则默认为2026
+const currentYear = (() => {
+  try {
+    return new Date().getFullYear();
+  } catch (e) {
+    console.warn('Failed to get current year', e);
+    return 2026;
+  }
+})();
 
 export default defineConfig({
   base: "",
@@ -24,7 +65,7 @@ export default defineConfig({
           { text: '下载程序', link: '/download/' },
         ],
         footer: {
-          copyright: 'Copyright © 2019 - 2026 Vilinko Studio. All Rights Reserved.',
+          copyright: `Copyright © 2019 - ${currentYear} Vilinko Studio. All Rights Reserved.`,
           message: '<a href="https://beian.miit.gov.cn/" target="_blank" style="text-decoration: none;">粤ICP备2025454076号</a>'
         },
         langMenuLabel: '切换语言',
@@ -34,7 +75,7 @@ export default defineConfig({
         sidebarMenuLabel: '菜单',
         returnToTopLabel: '返回顶部',
         docFooter: { prev: '上一篇', next: '下一篇' },
-          
+
         // 导航和侧边栏
         sidebar: createSidebar('zh'),
       }
@@ -49,7 +90,7 @@ export default defineConfig({
           { text: 'Download', link: '/en/download/' },
         ],
         footer: {
-          copyright: 'Copyright © 2019 - 2026 Vilinko Studio. All Rights Reserved.',
+          copyright: `Copyright © 2019 - ${currentYear} Vilinko Studio. All Rights Reserved.`,
           message: '<a href="https://beian.miit.gov.cn/" target="_blank" style="text-decoration: none;">粤ICP备2025454076号</a>'
         },
         langMenuLabel: 'Switch Language',
