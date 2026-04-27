@@ -1,755 +1,802 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>邮件快速反馈通道</title>
-   <script src="https://cdn.tailwindcss.com"></script>
-   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
-   <style>
-       * {
-           -webkit-user-select: none;
-           -moz-user-select: none;
-           -ms-user-select: none;
-           user-select: none;
-       }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>邮件快速反馈通道</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
 
-       input, textarea {
-           -webkit-user-select: none;
-           -moz-user-select: none;
-           -ms-user-select: none;
-           user-select: none;
-       }
+        input,
+        textarea {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
 
-       body {
-           font-family: 'Noto Sans SC', sans-serif;
-           background-color: #f3f4f6;
-           background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
-           background-size: 20px 20px;
-       }
-     
-       .vui-control {
-           transition: all 0.2s ease;
-           position: relative;
-       }
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f3f4f6;
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
 
-       .vui-control-base {
-           box-shadow: 
-               inset 0 -1px 0 0 rgba(0, 0, 0, 0.06), 
-               inset 0 -2px 0 0 rgba(0, 0, 0, 0.02);
-       }
+        .vui-control {
+            transition: all 0.2s ease;
+            position: relative;
+        }
 
-       .vui-control-primary {
-           box-shadow: 
-               inset 0 -1.5px 0 0 rgba(0, 0, 0, 0.15), 
-               inset 0 -3px 0 0 rgba(0, 0, 0, 0.05);
-       }
+        .vui-control-base {
+            box-shadow:
+                inset 0 -1px 0 0 rgba(0, 0, 0, 0.06),
+                inset 0 -2px 0 0 rgba(0, 0, 0, 0.02);
+        }
 
-       .vui-control:active:not(:disabled) {
-           transform: translateY(1px);
-           box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-       }
+        .vui-control-primary {
+            box-shadow:
+                inset 0 -1.5px 0 0 rgba(0, 0, 0, 0.15),
+                inset 0 -3px 0 0 rgba(0, 0, 0, 0.05);
+        }
 
-       .custom-scrollbar::-webkit-scrollbar {
-           width: 6px;
-       }
-       .custom-scrollbar::-webkit-scrollbar-track {
-           background: #f1f1f1;
-       }
-       .custom-scrollbar::-webkit-scrollbar-thumb {
-           background: #d1d5db;
-           border-radius: 12px;
-       }
-       .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-           background: #9ca3af;
-       }
+        .vui-control:active:not(:disabled) {
+            transform: translateY(1px);
+            box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
 
-       .checkbox-wrapper input:checked + div {
-           background-color: #5279fb;
-           border-color: #5279fb;
-       }
-       .checkbox-wrapper input:checked + div svg {
-           display: block;
-       }
-       
-       .modal-enter {
-           opacity: 0;
-           transform: scale(0.95);
-       }
-       .modal-enter-active {
-           opacity: 1;
-           transform: scale(1);
-           transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-       }
-       .modal-exit {
-           opacity: 1;
-           transform: scale(1);
-       }
-       .modal-exit-active {
-           opacity: 0;
-           transform: scale(0.95);
-           transition: opacity 0.2s ease-in, transform 0.2s ease-in;
-       }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
 
-       .input-group:focus-within label {
-           color: #5279fb;
-       }
-       .input-group:focus-within input {
-           border-color: #5279fb;
-           box-shadow: 0 0 0 3px rgba(82, 121, 251, 0.1), inset 0 -2px 0 0 rgba(82, 121, 251, 0.1);
-       }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
 
-       .service-unavailable-modal {
-           position: fixed;
-           inset: 0;
-           background-color: rgba(0, 0, 0, 0.8);
-           backdrop-filter: blur(4px);
-           display: flex;
-           align-items: center;
-           justify-content: center;
-           z-index: 9999;
-       }
-       .service-unavailable-content {
-           background-color: white;
-           border-radius: 16px;
-           padding: 3rem 2rem;
-           max-width: 90%;
-           width: 400px;
-           text-align: center;
-           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-       }
-   </style>
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 12px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+
+        .checkbox-wrapper input:checked+div {
+            background-color: #5279fb;
+            border-color: #5279fb;
+        }
+
+        .checkbox-wrapper input:checked+div svg {
+            display: block;
+        }
+
+        .modal-enter {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        .modal-enter-active {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+
+        .modal-exit {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .modal-exit-active {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.2s ease-in, transform 0.2s ease-in;
+        }
+
+        .input-group:focus-within label {
+            color: #5279fb;
+        }
+
+        .input-group:focus-within input {
+            border-color: #5279fb;
+            box-shadow: 0 0 0 3px rgba(82, 121, 251, 0.1), inset 0 -2px 0 0 rgba(82, 121, 251, 0.1);
+        }
+
+        .service-unavailable-modal {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .service-unavailable-content {
+            background-color: white;
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            max-width: 90%;
+            width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+    </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4 sm:p-6" 
-      oncontextmenu="return false" 
-      onselectstart="return false" 
-      ondragstart="return false">
 
-   <div class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 relative">
-       
-       <div class="p-6 sm:p-8">
-           <div class="text-center mb-8">
-               <h1 class="text-2xl font-bold text-gray-800 mb-2 tracking-tight" id="mainTitle">快速反馈</h1>
-               <p class="text-sm text-gray-500 leading-relaxed" id="subTitle">
-                   请您先填写基本信息，<br class="sm:hidden">然后我们会拉起您的邮箱来反馈
-               </p>
-           </div>
+<body class="min-h-screen flex items-center justify-center p-4 sm:p-6" oncontextmenu="return false"
+    onselectstart="return false" ondragstart="return false">
 
-           <form id="feedbackForm" class="space-y-6" onsubmit="event.preventDefault();">
-               
-               <div class="input-group relative">
-                   <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5 ml-1" id="labelProduct">产品</label>
-                   <div onclick="openModal('product')" class="cursor-pointer group">
-                       <div id="productContainer" class="vui-control vui-control-base flex items-center justify-between w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-700 transition-all duration-200" onmouseover="this.style.borderColor='#5279fb'; this.style.backgroundColor='white'" onmouseout="this.style.borderColor='#e5e7eb'; this.style.backgroundColor='#f9fafb'">
-                           <span id="productDisplay" class="text-gray-400 select-none">请选择产品</span>
-                           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                           </svg>
-                       </div>
-                   </div>
-                   <input type="hidden" id="productInput" required>
-               </div>
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 relative">
 
-               <div class="input-group">
-                   <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5 ml-1" id="labelVersion">版本</label>
-                   <input type="text" id="versionInput" placeholder="例如：v2.1.0" 
-                       class="vui-control vui-control-base w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 outline-none transition-all duration-200 focus:bg-white"
-                       required>
-               </div>
+        <div class="p-6 sm:p-8">
+            <div class="text-center mb-8">
+                <h1 class="text-2xl font-bold text-gray-800 mb-2 tracking-tight" id="mainTitle">快速反馈</h1>
+                <p class="text-sm text-gray-500 leading-relaxed" id="subTitle">
+                    请您先填写基本信息，<br class="sm:hidden">然后我们会拉起您的邮箱来反馈
+                </p>
+            </div>
 
-               <div class="input-group relative">
-                   <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5 ml-1" id="labelDevice">触发问题时使用的设备</label>
-                   <div onclick="openModal('device')" class="cursor-pointer group">
-                       <div id="deviceContainer" class="vui-control vui-control-base flex items-center justify-between w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-700 transition-all duration-200" onmouseover="this.style.borderColor='#5279fb'; this.style.backgroundColor='white'" onmouseout="this.style.borderColor='#e5e7eb'; this.style.backgroundColor='#f9fafb'">
-                           <span id="deviceDisplay" class="text-gray-400 select-none">请选择设备类型</span>
-                           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                           </svg>
-                       </div>
-                   </div>
-                   <input type="hidden" id="deviceInput" required>
-               </div>
+            <form id="feedbackForm" class="space-y-6" onsubmit="event.preventDefault();">
 
-               <div class="flex items-start justify-center mt-6 mb-2">
-                   <label class="checkbox-wrapper flex items-center cursor-pointer group">
-                       <input type="checkbox" id="agreementCheck" class="hidden">
-                       <div class="w-5 h-5 border-2 border-gray-300 rounded flex items-center justify-center transition-colors duration-200 mr-2 bg-white" onmouseover="this.style.borderColor='#5279fb'" onmouseout="this.style.borderColor='#d1d5db'">
-                           <svg class="w-3 h-3 text-white hidden pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                       </div>
-                       <span class="text-sm text-gray-500 select-none" id="agreementText">
-                           我已阅读并同意
-                           <a href="https://docs.vilinko.com/agreement/privacy.html" target="_blank" class="font-medium hover:underline" style="color: #5279fb;">使用协议</a>
-                       </span>
-                   </label>
-               </div>
+                <div class="input-group relative">
+                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5 ml-1"
+                        id="labelProduct">产品</label>
+                    <div onclick="openModal('product')" class="cursor-pointer group">
+                        <div id="productContainer"
+                            class="vui-control vui-control-base flex items-center justify-between w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-700 transition-all duration-200"
+                            onmouseover="this.style.borderColor='#5279fb'; this.style.backgroundColor='white'"
+                            onmouseout="this.style.borderColor='#e5e7eb'; this.style.backgroundColor='#f9fafb'">
+                            <span id="productDisplay" class="text-gray-400 select-none">请选择产品</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 transition-colors"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                    </div>
+                    <input type="hidden" id="productInput" required>
+                </div>
 
-               <button type="button" id="submitBtn" onclick="handleSubmit()" disabled
-                   class="vui-control vui-control-base w-full py-3.5 px-4 text-white font-bold rounded-xl transition-all duration-300 cursor-not-allowed flex items-center justify-center space-x-2 mt-4" style="background-color: #d1d5db;">
-                   <span id="btnSubmit">确认并发送反馈</span>
-                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                   </svg>
-               </button>
-           </form>
-       </div>
-   </div>
+                <div class="input-group">
+                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5 ml-1"
+                        id="labelVersion">版本</label>
+                    <input type="text" id="versionInput" placeholder="例如：v2.1.0"
+                        class="vui-control vui-control-base w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 outline-none transition-all duration-200 focus:bg-white"
+                        required>
+                </div>
 
-   <div id="selectionModal" class="fixed inset-0 z-50 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-       <div class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity opacity-0" id="modalBackdrop" onclick="closeModal()"></div>
-       <div class="fixed inset-0 z-10 overflow-y-auto">
-           <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-               <div id="modalPanel" class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-sm opacity-0 scale-95">
-                   <div class="bg-gray-50 px-4 py-3 sm:px-6 border-b border-gray-100 flex justify-between items-center">
-                       <h3 class="text-base font-semibold leading-6 text-gray-900" id="modalTitle">选择项目</h3>
-                       <button type="button" onclick="closeModal()" class="text-gray-400 hover:text-gray-500"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>
-                   </div>
-                   <div class="px-2 py-2 max-h-[60vh] overflow-y-auto custom-scrollbar" id="modalList"></div>
-                   <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 border-t border-gray-100">
-                       <button type="button" onclick="closeModal()" class="mt-3 inline-flex w-full justify-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" id="btnCancel">取消</button>
-                   </div>
-               </div>
-           </div>
-       </div>
-   </div>
+                <div class="input-group relative">
+                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5 ml-1"
+                        id="labelDevice">触发问题时使用的设备</label>
+                    <div onclick="openModal('device')" class="cursor-pointer group">
+                        <div id="deviceContainer"
+                            class="vui-control vui-control-base flex items-center justify-between w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-700 transition-all duration-200"
+                            onmouseover="this.style.borderColor='#5279fb'; this.style.backgroundColor='white'"
+                            onmouseout="this.style.borderColor='#e5e7eb'; this.style.backgroundColor='#f9fafb'">
+                            <span id="deviceDisplay" class="text-gray-400 select-none">请选择设备类型</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 transition-colors"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                    </div>
+                    <input type="hidden" id="deviceInput" required>
+                </div>
 
-   <div id="toast" class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-lg transition-all duration-300 opacity-0 translate-y-[-20px] pointer-events-none z-50 flex items-center space-x-2">
-       <span id="toastMsg">请完善信息</span>
-   </div>
+                <div class="flex items-start justify-center mt-6 mb-2">
+                    <label class="checkbox-wrapper flex items-center cursor-pointer group">
+                        <input type="checkbox" id="agreementCheck" class="hidden">
+                        <div class="w-5 h-5 border-2 border-gray-300 rounded flex items-center justify-center transition-colors duration-200 mr-2 bg-white"
+                            onmouseover="this.style.borderColor='#5279fb'"
+                            onmouseout="this.style.borderColor='#d1d5db'">
+                            <svg class="w-3 h-3 text-white hidden pointer-events-none" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <span class="text-sm text-gray-500 select-none" id="agreementText">
+                            我已阅读并同意
+                            <a href="https://docs.vilinko.com/agreement/privacy.html" target="_blank"
+                                class="font-medium hover:underline" style="color: #5279fb;">使用协议</a>
+                        </span>
+                    </label>
+                </div>
 
-   <script>
-       // 多语言配置
-       const translations = {
-           // 简体中文
-           'zh-CN': {
-               mainTitle: '快速反馈',
-               subTitle: '请您先填写基本信息，然后我们会拉起您的邮箱来反馈',
-               labelProduct: '产品',
-               placeholderProduct: '请选择产品',
-               labelVersion: '版本',
-               placeholderVersion: '例如：v2.1.0',
-               labelDevice: '触发问题时使用的设备',
-               placeholderDevice: '请选择设备类型',
-               agreementText: '我已阅读并同意<a href="https://docs.vilinko.com/agreement/privacy.html" target="_blank" class="font-medium hover:underline" style="color: #5279fb;">使用协议</a>',
-               btnSubmit: '确认并发送反馈',
-               modalTitleProduct: '选择产品',
-               modalTitleDevice: '选择设备',
-               btnCancel: '取消',
-               toastMsg: '请完善信息',
-               serviceUnavailableTitle: '服务暂不可用',
-               serviceUnavailableDesc: '服务维护中，请稍后再试',
-               directFeedbackBtn: '直接反馈',
-               emailSubject: '用户问题反馈',
-               lightframeGuide: '若允许，请点击下拉菜单->高级->查看用户数据，在确定不包含隐私信息的情况下打包这些文件并上传。'
-           },
-           // 台湾繁体
-           'zh-TW': {
-               mainTitle: '快速回饋',
-               subTitle: '請您先填寫基本資訊，然後我們會開啟您的信箱來回饋',
-               labelProduct: '產品',
-               placeholderProduct: '請選擇產品',
-               labelVersion: '版本',
-               placeholderVersion: '例如：v2.1.0',
-               labelDevice: '觸發問題時使用的設備',
-               placeholderDevice: '請選擇設備類型',
-               agreementText: '我已閱讀並同意<a href="https://docs.vilinko.com/agreement/privacy.html" target="_blank" class="font-medium hover:underline" style="color: #5279fb;">使用協議</a>',
-               btnSubmit: '確認並發送回饋',
-               modalTitleProduct: '選擇產品',
-               modalTitleDevice: '選擇設備',
-               btnCancel: '取消',
-               toastMsg: '請完善資訊',
-               serviceUnavailableTitle: '服務暫不可用',
-               serviceUnavailableDesc: '服務維護中，請稍後再試',
-               directFeedbackBtn: '直接回饋',
-               emailSubject: '用戶問題回饋',
-               lightframeGuide: '若允許，請點擊下拉選單->進階->查看使用者數據，在確定不包含隱私資訊的情況下打包這些檔案並上傳。'
-           },
-           // 港澳繁体
-           'zh-HK': {
-               mainTitle: '快速回饋',
-               subTitle: '請您先填寫基本資訊，然後我們會開啟您的電郵來回饋',
-               labelProduct: '產品',
-               placeholderProduct: '請選擇產品',
-               labelVersion: '版本',
-               placeholderVersion: '例如：v2.1.0',
-               labelDevice: '觸發問題時使用的設備',
-               placeholderDevice: '請選擇設備類型',
-               agreementText: '我已閱讀並同意<a href="https://docs.vilinko.com/agreement/privacy.html" target="_blank" class="font-medium hover:underline" style="color: #5279fb;">使用協議</a>',
-               btnSubmit: '確認並發送回饋',
-               modalTitleProduct: '選擇產品',
-               modalTitleDevice: '選擇設備',
-               btnCancel: '取消',
-               toastMsg: '請完善資訊',
-               serviceUnavailableTitle: '服務暫未能使用',
-               serviceUnavailableDesc: '此服務正在維護中，請稍後再試',
-               directFeedbackBtn: '直接回饋',
-               emailSubject: '用戶問題回饋',
-               lightframeGuide: '若允許，請點擊下拉選單->進階->查看用戶數據，在確定不包含私隱資訊的情況下打包這些檔案並上傳。'
-           },
-           // 英文
-           'en': {
-               mainTitle: 'Quick Feedback',
-               subTitle: 'Please fill in your basic information first, then we will launch your email to send feedback',
-               labelProduct: 'Product',
-               placeholderProduct: 'Please select product',
-               labelVersion: 'Version',
-               placeholderVersion: 'e.g. v2.1.0',
-               labelDevice: 'Device used when the problem occurred',
-               placeholderDevice: 'Please select device type',
-               agreementText: 'I have read and agree to the <a href="https://docs.vilinko.com/agreement/privacy.html" target="_blank" class="font-medium hover:underline" style="color: #5279fb;">Terms of Service</a>',
-               btnSubmit: 'Confirm and Send Feedback',
-               modalTitleProduct: 'Select Product',
-               modalTitleDevice: 'Select Device',
-               btnCancel: 'Cancel',
-               toastMsg: 'Please complete the information',
-               serviceUnavailableTitle: 'Service Unavailable',
-               serviceUnavailableDesc: 'Service is under maintenance, please try again later',
-               directFeedbackBtn: 'Direct Feedback',
-               emailSubject: 'User Issue Feedback',
-               lightframeGuide: 'If permitted, please click the drop-down menu->Advanced->View User Data, and package these files for upload after confirming they contain no private information.'
-           },
-           // 日文
-           'ja': {
-               mainTitle: 'クイックフィードバック',
-               subTitle: '基本情報を入力してください。入力後、メールアプリが起動してフィードバックできます',
-               labelProduct: '製品',
-               placeholderProduct: '製品を選択してください',
-               labelVersion: 'バージョン',
-               placeholderVersion: '例：v2.1.0',
-               labelDevice: '問題発生時に使用したデバイス',
-               placeholderDevice: 'デバイスの種類を選択してください',
-               agreementText: '利用規約を読み、同意します<a href="https://docs.vilinko.com/agreement/privacy.html" target="_blank" class="font-medium hover:underline" style="color: #5279fb;">利用規約</a>',
-               btnSubmit: '確認してフィードバックを送信',
-               modalTitleProduct: '製品を選択',
-               modalTitleDevice: 'デバイスを選択',
-               btnCancel: 'キャンセル',
-               toastMsg: '情報を補完してください',
-               serviceUnavailableTitle: 'サービスは一時的に利用できません',
-               serviceUnavailableDesc: 'サービスメンテナンス中です。後でもう一度お試しください',
-               directFeedbackBtn: '直接フィードバック',
-               emailSubject: 'ユーザーの問題フィードバック',
-               lightframeGuide: '許可されている場合は、ドロップダウンメニュー->詳細設定->ユーザーデータの表示をクリックし、プライバシー情報が含まれていないことを確認した上で、これらのファイルをパッケージ化してアップロードしてください。'
-           },
-           // 韩文
-           'ko': {
-               mainTitle: '빠른 피드백',
-               subTitle: '기본 정보를 먼저 작성한 후、이메일을 열어 피드백할 수 있습니다',
-               labelProduct: '제품',
-               placeholderProduct: '제품을 선택해주세요',
-               labelVersion: '버전',
-               placeholderVersion: '예: v2.1.0',
-               labelDevice: '문제 발생 시 사용한 기기',
-               placeholderDevice: '기기 유형을 선택해주세요',
-               agreementText: '이용 약관을 읽고 동의합니다<a href="https://docs.vilinko.com/agreement/privacy.html" target="_blank" class="font-medium hover:underline" style="color: #5279fb;">이용 약관</a>',
-               btnSubmit: '확인하고 피드백 보내기',
-               modalTitleProduct: '제품 선택',
-               modalTitleDevice: '기기 선택',
-               btnCancel: '취소',
-               toastMsg: '정보를 완성해주세요',
-               serviceUnavailableTitle: '서비스를 사용할 수 없음',
-               serviceUnavailableDesc: '서비스 유지보수 중입니다。나중에 다시 시도해주세요',
-               directFeedbackBtn: '직접 피드백',
-               emailSubject: '사용자 문제 피드백',
-               lightframeGuide: '허용되는 경우 드롭다운 메뉴->고급->사용자 데이터 보기를 클릭하고、개인 정보가 포함되지 않은 것을 확인한 후 해당 파일들을 패키지하여 업로드하십시오.'
-           },
-           // 俄语
-           'ru': {
-               mainTitle: 'Быстрый отзыв',
-               subTitle: 'Пожалуйста, сначала заполните базовую информацию, затем мы откроем вашу почту для отправки отзыва',
-               labelProduct: 'Продукт',
-               placeholderProduct: 'Выберите продукт',
-               labelVersion: 'Версия',
-               placeholderVersion: 'например: v2.1.0',
-               labelDevice: 'Устройство, на котором возникла проблема',
-               placeholderDevice: 'Выберите тип устройства',
-               agreementText: 'Я прочитал и согласен с<a href="https://docs.vilinko.com/agreement/privacy.html" target="_blank" class="font-medium hover:underline" style="color: #5279fb;">Условиями использования</a>',
-               btnSubmit: 'Подтвердить и отправить отзыв',
-               modalTitleProduct: 'Выберите продукт',
-               modalTitleDevice: 'Выберите устройство',
-               btnCancel: 'Отмена',
-               toastMsg: 'Пожалуйста, заполните всю информацию',
-               serviceUnavailableTitle: 'Сервис временно недоступен',
-               serviceUnavailableDesc: 'Сервис находится на техническом обслуживании, пожалуйста, попробуйте позже',
-               directFeedbackBtn: 'Прямой отзыв',
-               emailSubject: 'Отзыв пользователя о проблеме',
-               lightframeGuide: 'Если разрешено, нажмите на выпадающее меню->Дополнительно->Просмотр пользовательских данных, убедитесь, что они не содержат конфиденциальную информацию, затем упакуйте эти файлы и загрузите.'
-           }
-       };
+                <button type="button" id="submitBtn" onclick="handleSubmit()" disabled
+                    class="vui-control vui-control-base w-full py-3.5 px-4 text-white font-bold rounded-xl transition-all duration-300 cursor-not-allowed flex items-center justify-center space-x-2 mt-4"
+                    style="background-color: #d1d5db;">
+                    <span id="btnSubmit">确认并发送反馈</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
 
-       const productTranslations = {
-           'zh-CN': ["Lightframe", "网站", "vui解析器", "Universe", "Pogget", "其他"],
-           'zh-TW': ["Lightframe", "網站", "vui解析器", "Universe", "Pogget", "其他"],
-           'zh-HK': ["Lightframe", "網站", "vui解析器", "Universe", "Pogget", "其他"],
-           'en': ["Lightframe", "Website", "VUI Parser", "Universe", "Pogget", "Others"],
-           'ja': ["Lightframe", "ウェブサイト", "VUIパーサー", "Universe", "Pogget", "その他"],
-           'ko': ["Lightframe", "웹사이트", "VUI 파서", "Universe", "Pogget", "기타"],
-           'ru': ["Lightframe", "Веб-сайт", "VUI парсер", "Universe", "Pogget", "Другое"]
-       };
+    <div id="selectionModal" class="fixed inset-0 z-50 hidden" aria-labelledby="modal-title" role="dialog"
+        aria-modal="true">
+        <div class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity opacity-0" id="modalBackdrop"
+            onclick="closeModal()"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                <div id="modalPanel"
+                    class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-sm opacity-0 scale-95">
+                    <div
+                        class="bg-gray-50 px-4 py-3 sm:px-6 border-b border-gray-100 flex justify-between items-center">
+                        <h3 class="text-base font-semibold leading-6 text-gray-900" id="modalTitle">选择项目</h3>
+                        <button type="button" onclick="closeModal()" class="text-gray-400 hover:text-gray-500"><svg
+                                class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg></button>
+                    </div>
+                    <div class="px-2 py-2 max-h-[60vh] overflow-y-auto custom-scrollbar" id="modalList"></div>
+                    <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 border-t border-gray-100">
+                        <button type="button" onclick="closeModal()"
+                            class="mt-3 inline-flex w-full justify-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                            id="btnCancel">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-       const deviceTranslations = {
-           'zh-CN': ["安卓-小米", "安卓-华为", "安卓-OPPO", "安卓-VIVO", "安卓-三星", "安卓-其他", "苹果", "鸿蒙NEXT-华为", "OpenHarmony", "Windows-x64", "Windows-arm64", "Linux", "MacOS"],
-           'zh-TW': ["安卓-小米", "安卓-華為", "安卓-OPPO", "安卓-VIVO", "安卓-三星", "安卓-其他", "蘋果", "鸿蒙NEXT-華為", "OpenHarmony", "Windows-x64", "Windows-arm64", "Linux", "MacOS"],
-           'zh-HK': ["安卓-小米", "安卓-華為", "安卓-OPPO", "安卓-VIVO", "安卓-三星", "安卓-其他", "蘋果", "鸿蒙NEXT-華為", "OpenHarmony", "Windows-x64", "Windows-arm64", "Linux", "MacOS"],
-           'en': ["Android-Xiaomi", "Android-Huawei", "Android-OPPO", "Android-VIVO", "Android-Samsung", "Android-Others", "Apple", "HarmonyOS NEXT-Huawei", "OpenHarmony", "Windows-x64", "Windows-arm64", "Linux", "MacOS"],
-           'ja': ["Android-シャオミ", "Android-ファーウェイ", "Android-OPPO", "Android-VIVO", "Android-サムスン", "Android-その他", "Apple", "HarmonyOS NEXT-ファーウェイ", "OpenHarmony", "Windows-x64", "Windows-arm64", "Linux", "MacOS"],
-           'ko': ["Android-샤오미", "Android-화웨이", "Android-OPPO", "Android-VIVO", "Android-삼성", "Android-기타", "Apple", "HarmonyOS NEXT-화웨이", "OpenHarmony", "Windows-x64", "Windows-arm64", "Linux", "MacOS"],
-           'ru': ["Android-Xiaomi", "Android-Huawei", "Android-OPPO", "Android-VIVO", "Android-Samsung", "Android-Другие", "Apple", "HarmonyOS NEXT-Huawei", "OpenHarmony", "Windows-x64", "Windows-arm64", "Linux", "MacOS"]
-       };
+    <div id="toast"
+        class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-lg transition-all duration-300 opacity-0 translate-y-[-20px] pointer-events-none z-50 flex items-center space-x-2">
+        <span id="toastMsg">请完善信息</span>
+    </div>
 
-       const productToChineseMap = {
-           'Lightframe': 'Lightframe',
-           '网站': '网站', '網站': '网站', 'Website': '网站', 'ウェブサイト': '网站', '웹사이트': '网站', 'Веб-сайт': '网站',
-           'vui解析器': 'vui解析器', 'VUI Parser': 'vui解析器', 'VUIパーサー': 'vui解析器', 'VUI 파서': 'vui解析器', 'VUI парсер': 'vui解析器',
-           'Universe': 'Universe',
-           'Pogget': 'Pogget',
-           '其他': '其他', 'Others': '其他', 'その他': '其他', '기타': '其他', 'Другое': '其他'
-       };
+    <script>
+        // 多语言配置
+        const translations = {
+            // 简体中文
+            'zh-CN': {
+                mainTitle: '快速反馈',
+                subTitle: '请您先填写基本信息，然后我们会拉起您的邮箱来反馈',
+                labelProduct: '产品',
+                placeholderProduct: '请选择产品',
+                labelVersion: '版本',
+                placeholderVersion: '例如：v2.1.0',
+                labelDevice: '触发问题时使用的设备',
+                placeholderDevice: '请选择设备类型',
+                agreementText: '我已阅读并同意<a href="https://docs.vilinko.com/agreement/privacy.html" target="_blank" class="font-medium hover:underline" style="color: #5279fb;">使用协议</a>',
+                btnSubmit: '确认并发送反馈',
+                modalTitleProduct: '选择产品',
+                modalTitleDevice: '选择设备',
+                btnCancel: '取消',
+                toastMsg: '请完善信息',
+                serviceUnavailableTitle: '服务暂不可用',
+                serviceUnavailableDesc: '服务维护中，请稍后再试',
+                directFeedbackBtn: '返回首页',
+                emailSubject: '用户问题反馈',
+                lightframeGuide: '若允许，请点击下拉菜单->高级->查看用户数据，在确定不包含隐私信息的情况下打包这些文件并上传。'
+            },
+            // 台湾繁体
+            'zh-TW': {
+                mainTitle: '快速回饋',
+                subTitle: '請您先填寫基本資訊，然後我們會開啟您的信箱來回饋',
+                labelProduct: '產品',
+                placeholderProduct: '請選擇產品',
+                labelVersion: '版本',
+                placeholderVersion: '例如：v2.1.0',
+                labelDevice: '觸發問題時使用的設備',
+                placeholderDevice: '請選擇設備類型',
+                agreementText: '我已閱讀並同意<a href="https://docs.vilinko.com/agreement/privacy.html" target="_blank" class="font-medium hover:underline" style="color: #5279fb;">使用協議</a>',
+                btnSubmit: '確認並發送回饋',
+                modalTitleProduct: '選擇產品',
+                modalTitleDevice: '選擇設備',
+                btnCancel: '取消',
+                toastMsg: '請完善資訊',
+                serviceUnavailableTitle: '服務暫不可用',
+                serviceUnavailableDesc: '服務維護中，請稍後再試',
+                directFeedbackBtn: '返回首頁',
+                emailSubject: '用戶問題回饋',
+                lightframeGuide: '若允許，請點擊下拉選單->進階->查看使用者數據，在確定不包含隱私資訊的情況下打包這些檔案並上傳。'
+            },
+            // 港澳繁体
+            'zh-HK': {
+                mainTitle: '快速回饋',
+                subTitle: '請您先填寫基本資訊，然後我們會開啟您的電郵來回饋',
+                labelProduct: '產品',
+                placeholderProduct: '請選擇產品',
+                labelVersion: '版本',
+                placeholderVersion: '例如：v2.1.0',
+                labelDevice: '觸發問題時使用的設備',
+                placeholderDevice: '請選擇設備類型',
+                agreementText: '我已閱讀並同意<a href="https://docs.vilinko.com/agreement/privacy.html" target="_blank" class="font-medium hover:underline" style="color: #5279fb;">使用協議</a>',
+                btnSubmit: '確認並發送回饋',
+                modalTitleProduct: '選擇產品',
+                modalTitleDevice: '選擇設備',
+                btnCancel: '取消',
+                toastMsg: '請完善資訊',
+                serviceUnavailableTitle: '服務暫未能使用',
+                serviceUnavailableDesc: '此服務正在維護中，請稍後再試',
+                directFeedbackBtn: '返回首頁',
+                emailSubject: '用戶問題回饋',
+                lightframeGuide: '若允許，請點擊下拉選單->進階->查看用戶數據，在確定不包含私隱資訊的情況下打包這些檔案並上傳。'
+            },
+            // 英文
+            'en': {
+                mainTitle: 'Quick Feedback',
+                subTitle: 'Please fill in your basic information first, then we will launch your email to send feedback',
+                labelProduct: 'Product',
+                placeholderProduct: 'Please select product',
+                labelVersion: 'Version',
+                placeholderVersion: 'e.g. v2.1.0',
+                labelDevice: 'Device used when the problem occurred',
+                placeholderDevice: 'Please select device type',
+                agreementText: 'I have read and agree to the <a href="https://docs.vilinko.com/agreement/privacy.html" target="_blank" class="font-medium hover:underline" style="color: #5279fb;">Terms of Service</a>',
+                btnSubmit: 'Confirm and Send Feedback',
+                modalTitleProduct: 'Select Product',
+                modalTitleDevice: 'Select Device',
+                btnCancel: 'Cancel',
+                toastMsg: 'Please complete the information',
+                serviceUnavailableTitle: 'Service Unavailable',
+                serviceUnavailableDesc: 'Service is under maintenance, please try again later',
+                directFeedbackBtn: 'Return to Home',
+                emailSubject: 'User Issue Feedback',
+                lightframeGuide: 'If permitted, please click the drop-down menu->Advanced->View User Data, and package these files for upload after confirming they contain no private information.'
+            },
+            // 日文
+            'ja': {
+                mainTitle: 'クイックフィードバック',
+                subTitle: '基本情報を入力してください。入力後、メールアプリが起動してフィードバックできます',
+                labelProduct: '製品',
+                placeholderProduct: '製品を選択してください',
+                labelVersion: 'バージョン',
+                placeholderVersion: '例：v2.1.0',
+                labelDevice: '問題発生時に使用したデバイス',
+                placeholderDevice: 'デバイスの種類を選択してください',
+                agreementText: '利用規約を読み、同意します<a href="https://docs.vilinko.com/agreement/privacy.html" target="_blank" class="font-medium hover:underline" style="color: #5279fb;">利用規約</a>',
+                btnSubmit: '確認してフィードバックを送信',
+                modalTitleProduct: '製品を選択',
+                modalTitleDevice: 'デバイスを選択',
+                btnCancel: 'キャンセル',
+                toastMsg: '情報を補完してください',
+                serviceUnavailableTitle: 'サービスは一時的に利用できません',
+                serviceUnavailableDesc: 'サービスメンテナンス中です。後でもう一度お試しください',
+                directFeedbackBtn: 'ホームページに戻る',
+                emailSubject: 'ユーザーの問題フィードバック',
+                lightframeGuide: '許可されている場合は、ドロップダウンメニュー->詳細設定->ユーザーデータの表示をクリックし、プライバシー情報が含まれていないことを確認した上で、これらのファイルをパッケージ化してアップロードしてください。'
+            },
+            // 韓文
+            'ko': {
+                mainTitle: '빠른 피드백',
+                subTitle: '기본 정보를 먼저 작성한 후, 이메일을 열어 피드백할 수 있습니다',
+                labelProduct: '제품',
+                placeholderProduct: '제품을 선택해주세요',
+                labelVersion: '버전',
+                placeholderVersion: '예: v2.1.0',
+                labelDevice: '문제 발생 시 사용한 기기',
+                placeholderDevice: '기기 유형을 선택해주세요',
+                agreementText: '이용 약관을 읽고 동의합니다<a href="https://docs.vilinko.com/agreement/privacy.html" target="_blank" class="font-medium hover:underline" style="color: #5279fb;">이용 약관</a>',
+                btnSubmit: '확인하고 피드백 보내기',
+                modalTitleProduct: '제품 선택',
+                modalTitleDevice: '기기 선택',
+                btnCancel: '취소',
+                toastMsg: '정보를 완성해주세요',
+                serviceUnavailableTitle: '서비스를 사용할 수 없음',
+                serviceUnavailableDesc: '서비스 유지보수 중입니다.나중에 다시 시도해주세요',
+                directFeedbackBtn: '홈페이지로 돌아가기',
+                emailSubject: '사용자 문제 피드백',
+                lightframeGuide: '허용되는 경우 드롭다운 메뉴->고급->사용자 데이터 보기를 클릭하고、개인 정보가 포함되지 않은 것을 확인한 후 해당 파일들을 패키지하여 업로드하십시오.'
+            },
+            // 俄语
+            'ru': {
+                mainTitle: 'Быстрый отзыв',
+                subTitle: 'Пожалуйста, сначала заполните базовую информацию, затем мы откроем вашу почту для отправки отзыва',
+                labelProduct: 'Продукт',
+                placeholderProduct: 'Выберите продукт',
+                labelVersion: 'Версия',
+                placeholderVersion: 'например: v2.1.0',
+                labelDevice: 'Устройство, на котором возникла проблема',
+                placeholderDevice: 'Выберите тип устройства',
+                agreementText: 'Я прочитал и согласен с<a href="https://docs.vilinko.com/agreement/privacy.html" target="_blank" class="font-medium hover:underline" style="color: #5279fb;">Условиями использования</a>',
+                btnSubmit: 'Подтвердить и отправить отзыв',
+                modalTitleProduct: 'Выберите продукт',
+                modalTitleDevice: 'Выберите устройство',
+                btnCancel: 'Отмена',
+                toastMsg: 'Пожалуйста, заполните всю информацию',
+                serviceUnavailableTitle: 'Сервис временно недоступен',
+                serviceUnavailableDesc: 'Сервис находится на техническом обслуживании, пожалуйста, попробуйте позже',
+                directFeedbackBtn: 'Вернуться на главную',
+                emailSubject: 'Отзыв пользователя о проблеме',
+                lightframeGuide: 'Если разрешено, нажмите на выпадающее меню->Дополнительно->Просмотр пользовательских данных, убедитесь, что они не содержат конфиденциальную информацию, затем упакуйте эти файлы и загрузите.'
+            }
+        };
 
-       const deviceToChineseMap = {
-           '安卓-小米': '安卓-小米', 'Android-Xiaomi': '安卓-小米', 'Android-シャオミ': '安卓-小米', 'Android-샤오미': '安卓-小米',
-           '安卓-华为': '安卓-华为', '安卓-華為': '安卓-华为', 'Android-Huawei': '安卓-华为', 'Android-ファーウェイ': '安卓-华为', 'Android-화웨이': '安卓-华为',
-           '安卓-OPPO': '安卓-OPPO', 'Android-OPPO': '安卓-OPPO',
-           '安卓-VIVO': '安卓-VIVO', 'Android-VIVO': '安卓-VIVO',
-           '安卓-三星': '安卓-三星', 'Android-Samsung': '安卓-三星', 'Android-サムスン': '安卓-三星', 'Android-삼성': '安卓-三星',
-           '安卓-其他': '安卓-其他', 'Android-Others': '安卓-其他', 'Android-その他': '安卓-其他', 'Android-기타': '安卓-其他', 'Android-Другие': '安卓-其他',
-           '苹果': '苹果', '蘋果': '苹果', 'Apple': '苹果',
-           '鸿蒙NEXT-华为': '鸿蒙NEXT-华为', '鸿蒙NEXT-華為': '鸿蒙NEXT-华为', 'HarmonyOS NEXT-Huawei': '鸿蒙NEXT-华为', 'HarmonyOS NEXT-ファーウェイ': '鸿蒙NEXT-华为', 'HarmonyOS NEXT-화웨이': '鸿蒙NEXT-华为',
-           'OpenHarmony': 'OpenHarmony',
-           'Windows-x64': 'Windows-x64',
-           'Windows-arm64': 'Windows-arm64',
-           'Linux': 'Linux',
-           'MacOS': 'MacOS'
-       };
+        const productTranslations = {
+            'zh-CN': ["Lightframe", "网站", "vui解析器", "Universe", "Pogget", "其他"],
+            'zh-TW': ["Lightframe", "網站", "vui解析器", "Universe", "Pogget", "其他"],
+            'zh-HK': ["Lightframe", "網站", "vui解析器", "Universe", "Pogget", "其他"],
+            'en': ["Lightframe", "Website", "VUI Parser", "Universe", "Pogget", "Others"],
+            'ja': ["Lightframe", "ウェブサイト", "VUIパーサー", "Universe", "Pogget", "その他"],
+            'ko': ["Lightframe", "웹사이트", "VUI 파서", "Universe", "Pogget", "기타"],
+            'ru': ["Lightframe", "Веб-сайт", "VUI парсер", "Universe", "Pogget", "Другое"]
+        };
 
-       const productKeywordMap = {
-           'zh-CN': {
-               'Lightframe': 'Lightframe',
-               '网站': 'Website',
-               'vui解析器': 'VUI Parser',
-               'Universe': 'Universe',
-               'Pogget': 'Pogget',
-               '其他': 'Others'
-           },
-           'zh-TW': {
-               'Lightframe': 'Lightframe',
-               '網站': 'Website',
-               'vui解析器': 'VUI Parser',
-               'Universe': 'Universe',
-               'Pogget': 'Pogget',
-               '其他': 'Others'
-           },
-           'zh-HK': {
-               'Lightframe': 'Lightframe',
-               '網站': 'Website',
-               'vui解析器': 'VUI Parser',
-               'Universe': 'Universe',
-               'Pogget': 'Pogget',
-               '其他': 'Others'
-           },
-           'en': {
-               'Lightframe': 'Lightframe',
-               'Website': 'Website',
-               'VUI Parser': 'VUI Parser',
-               'Universe': 'Universe',
-               'Pogget': 'Pogget',
-               'Others': 'Others'
-           },
-           'ja': {
-               'Lightframe': 'Lightframe',
-               'ウェブサイト': 'Website',
-               'VUIパーサー': 'VUI Parser',
-               'Universe': 'Universe',
-               'Pogget': 'Pogget',
-               'その他': 'Others'
-           },
-           'ko': {
-               'Lightframe': 'Lightframe',
-               '웹사이트': 'Website',
-               'VUI 파서': 'VUI Parser',
-               'Universe': 'Universe',
-               'Pogget': 'Pogget',
-               '기타': 'Others'
-           },
-           'ru': {
-               'Lightframe': 'Lightframe',
-               'Веб-сайт': 'Website',
-               'VUI парсер': 'VUI Parser',
-               'Universe': 'Universe',
-               'Pogget': 'Pogget',
-               'Другое': 'Others'
-           }
-       };
+        const deviceTranslations = {
+            'zh-CN': ["安卓-小米", "安卓-华为", "安卓-OPPO", "安卓-VIVO", "安卓-三星", "安卓-其他", "苹果", "鸿蒙NEXT-华为", "OpenHarmony", "Windows-x64", "Windows-arm64", "Linux", "MacOS"],
+            'zh-TW': ["安卓-小米", "安卓-華為", "安卓-OPPO", "安卓-VIVO", "安卓-三星", "安卓-其他", "蘋果", "鸿蒙NEXT-華為", "OpenHarmony", "Windows-x64", "Windows-arm64", "Linux", "MacOS"],
+            'zh-HK': ["安卓-小米", "安卓-華為", "安卓-OPPO", "安卓-VIVO", "安卓-三星", "安卓-其他", "蘋果", "鸿蒙NEXT-華為", "OpenHarmony", "Windows-x64", "Windows-arm64", "Linux", "MacOS"],
+            'en': ["Android-Xiaomi", "Android-Huawei", "Android-OPPO", "Android-VIVO", "Android-Samsung", "Android-Others", "Apple", "HarmonyOS NEXT-Huawei", "OpenHarmony", "Windows-x64", "Windows-arm64", "Linux", "MacOS"],
+            'ja': ["Android-シャオミ", "Android-ファーウェイ", "Android-OPPO", "Android-VIVO", "Android-サムスン", "Android-その他", "Apple", "HarmonyOS NEXT-ファーウェイ", "OpenHarmony", "Windows-x64", "Windows-arm64", "Linux", "MacOS"],
+            'ko': ["Android-シャオミ", "Android-화웨이", "Android-OPPO", "Android-VIVO", "Android-삼성", "Android-기타", "Apple", "HarmonyOS NEXT-화웨이", "OpenHarmony", "Windows-x64", "Windows-arm64", "Linux", "MacOS"],
+            'ru': ["Android-Xiaomi", "Android-Huawei", "Android-OPPO", "Android-VIVO", "Android-Samsung", "Android-Другие", "Apple", "HarmonyOS NEXT-Huawei", "OpenHarmony", "Windows-x64", "Windows-arm64", "Linux", "MacOS"]
+        };
 
-       const webProductKeywords = {
-           'zh-CN': ['网站'],
-           'zh-TW': ['網站'],
-           'zh-HK': ['網站'],
-           'en': ['Website'],
-           'ja': ['ウェブサイト'],
-           'ko': ['웹사이트'],
-           'ru': ['Веб-сайт']
-       };
+        const productToChineseMap = {
+            'Lightframe': 'Lightframe',
+            '网站': '网站', '網站': '网站', 'Website': '网站', 'ウェブサイト': '网站', '웹사이트': '网站', 'Веб-сайт': '网站',
+            'vui解析器': 'vui解析器', 'VUI Parser': 'vui解析器', 'VUIパーサー': 'vui解析器', 'VUI 파서': 'vui解析器', 'VUI парсер': 'vui解析器',
+            'Universe': 'Universe',
+            'Pogget': 'Pogget',
+            '其他': '其他', 'Others': '其他', 'その他': '其他', '기타': '其他', 'Другое': '其他'
+        };
 
-       function detectLanguageFromUA() {
-           const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-           const acceptLanguage = navigator.language || navigator.userLanguage || '';
-           
-           if (acceptLanguage.includes('zh')) {
-               if (acceptLanguage.includes('TW')) return 'zh-TW';
-               if (acceptLanguage.includes('HK')) return 'zh-HK';
-               return 'zh-CN';
-           }
-           if (acceptLanguage.includes('ja')) return 'ja';
-           if (acceptLanguage.includes('ko')) return 'ko';
-           if (acceptLanguage.includes('ru')) return 'ru';
-           if (acceptLanguage.includes('en')) return 'en';
-           if (userAgent.includes('Zh-TW') || userAgent.includes('Taiwan')) return 'zh-TW';
-           if (userAgent.includes('Zh-HK') || userAgent.includes('Hongkong')) return 'zh-HK';
-           if (userAgent.includes('Japanese') || userAgent.includes('Japan')) return 'ja';
-           if (userAgent.includes('Korean') || userAgent.includes('Korea')) return 'ko';
-           if (userAgent.includes('Russian') || userAgent.includes('Russia')) return 'ru';
-           
-           return 'en';
-       }
+        const deviceToChineseMap = {
+            '安卓-小米': '安卓-小米', 'Android-Xiaomi': '安卓-小米', 'Android-シャオミ': '安卓-小米', 'Android-シャオミ': '安卓-小米',
+            '安卓-华为': '安卓-华为', '安卓-華為': '安卓-华为', 'Android-Huawei': '安卓-华为', 'Android-ファーウェイ': '安卓-华为', 'Android-화웨이': '安卓-华为',
+            '安卓-OPPO': '安卓-OPPO', 'Android-OPPO': '安卓-OPPO',
+            '安卓-VIVO': '安卓-VIVO', 'Android-VIVO': '安卓-VIVO',
+            '安卓-三星': '安卓-삼성', 'Android-Samsung': '安卓-삼성', 'Android-サムスン': '安卓-삼성', 'Android-삼성': '安卓-삼성',
+            '安卓-其他': '安卓-기타', 'Android-Others': '安卓-기타', 'Android-その他': '安卓-기타', 'Android-기타': '安卓-기타', 'Android-Другие': '安卓-기타',
+            '苹果': '苹果', '蘋구': '苹果', 'Apple': '苹果',
+            '鸿蒙NEXT-华为': '鸿蒙NEXT-华为', '鸿蒙NEXT-華為': '鸿蒙NEXT-华为', 'HarmonyOS NEXT-Huawei': '鸿蒙NEXT-华为', 'HarmonyOS NEXT-ファーウェイ': '鸿蒙NEXT-华为', 'HarmonyOS NEXT-화웨이': '鸿蒙NEXT-华为',
+            'OpenHarmony': 'OpenHarmony',
+            'Windows-x64': 'Windows-x64',
+            'Windows-arm64': 'Windows-arm64',
+            'Linux': 'Linux',
+            'MacOS': 'MacOS'
+        };
 
-       function applyTranslations(lang) {
-           const langKey = translations[lang] ? lang : 'en';
-           const t = translations[langKey];
-           
-           document.getElementById('mainTitle').textContent = t.mainTitle;
-           document.getElementById('subTitle').innerHTML = t.subTitle.replace('，', '，<br class="sm:hidden">').replace('. ', '.<br class="sm:hidden">');
-           document.getElementById('labelProduct').textContent = t.labelProduct;
-           document.getElementById('productDisplay').textContent = t.placeholderProduct;
-           document.getElementById('labelVersion').textContent = t.labelVersion;
-           document.getElementById('versionInput').placeholder = t.placeholderVersion;
-           document.getElementById('labelDevice').textContent = t.labelDevice;
-           document.getElementById('deviceDisplay').textContent = t.placeholderDevice;
-           document.getElementById('agreementText').innerHTML = t.agreementText;
-           document.getElementById('btnSubmit').textContent = t.btnSubmit;
-           document.getElementById('modalTitle').textContent = t.modalTitleProduct;
-           document.getElementById('btnCancel').textContent = t.btnCancel;
-           document.getElementById('toastMsg').textContent = t.toastMsg;
-           
-           document.documentElement.lang = langKey;
-           
-           window.currentLang = langKey;
-       }
+        const productKeywordMap = {
+            'zh-CN': {
+                'Lightframe': 'Lightframe',
+                '网站': 'Website',
+                'vui解析器': 'VUI Parser',
+                'Universe': 'Universe',
+                'Pogget': 'Pogget',
+                '其他': 'Others'
+            },
+            'zh-TW': {
+                'Lightframe': 'Lightframe',
+                '網站': 'Website',
+                'vui解析器': 'VUI Parser',
+                'Universe': 'Universe',
+                'Pogget': 'Pogget',
+                '其他': 'Others'
+            },
+            'zh-HK': {
+                'Lightframe': 'Lightframe',
+                '網站': 'Website',
+                'vui解析器': 'VUI Parser',
+                'Universe': 'Universe',
+                'Pogget': 'Pogget',
+                '其他': 'Others'
+            },
+            'en': {
+                'Lightframe': 'Lightframe',
+                'Website': 'Website',
+                'VUI Parser': 'VUI Parser',
+                'Universe': 'Universe',
+                'Pogget': 'Pogget',
+                'Others': 'Others'
+            },
+            'ja': {
+                'Lightframe': 'Lightframe',
+                'ウェブサイト': 'Website',
+                'VUIパーサー': 'VUI Parser',
+                'Universe': 'Universe',
+                'Pogget': 'Pogget',
+                'その他': 'Others'
+            },
+            'ko': {
+                'Lightframe': 'Lightframe',
+                '웹사이트': 'Website',
+                'VUI 파서': 'VUI Parser',
+                'Universe': 'Universe',
+                'Pogget': 'Pogget',
+                '기타': 'Others'
+            },
+            'ru': {
+                'Lightframe': 'Lightframe',
+                'Веб-сайт': 'Website',
+                'VUI парсер': 'VUI Parser',
+                'Universe': 'Universe',
+                'Pogget': 'Pogget',
+                'Другое': 'Others'
+            }
+        };
 
-       const serviceStatus = "run"; // Service
-       
-       document.addEventListener('DOMContentLoaded', function() {
-           const detectedLang = detectLanguageFromUA();
-           applyTranslations(detectedLang);
-           
-           document.addEventListener('keydown', function(e) {
-               if ((e.ctrlKey && (e.key === 'c' || e.key === 'x' || e.key === 'v' || e.key === 'a')) || 
-                   (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'i'))) {
-                   e.preventDefault();
-                   return false;
-               }
-           });
+        const webProductKeywords = {
+            'zh-CN': ['网站'],
+            'zh-TW': ['網站'],
+            'zh-HK': ['網站'],
+            'en': ['Website'],
+            'ja': ['ウェブサイト'],
+            'ko': ['웹사이트'],
+            'ru': ['Веб-сайт']
+        };
 
-           document.addEventListener('copy', function(e) {
-               e.preventDefault();
-               return false;
-           });
+        function detectLanguageFromUA() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            const acceptLanguage = navigator.language || navigator.userLanguage || '';
 
-           document.addEventListener('cut', function(e) {
-               e.preventDefault();
-               return false;
-           });
+            if (acceptLanguage.includes('zh')) {
+                if (acceptLanguage.includes('TW')) return 'zh-TW';
+                if (acceptLanguage.includes('HK')) return 'zh-HK';
+                return 'zh-CN';
+            }
+            if (acceptLanguage.includes('ja')) return 'ja';
+            if (acceptLanguage.includes('ko')) return 'ko';
+            if (acceptLanguage.includes('ru')) return 'ru';
+            if (acceptLanguage.includes('en')) return 'en';
+            if (userAgent.includes('Zh-TW') || userAgent.includes('Taiwan')) return 'zh-TW';
+            if (userAgent.includes('Zh-HK') || userAgent.includes('Hongkong')) return 'zh-HK';
+            if (userAgent.includes('Japanese') || userAgent.includes('Japan')) return 'ja';
+            if (userAgent.includes('Korean') || userAgent.includes('Korea')) return 'ko';
+            if (userAgent.includes('Russian') || userAgent.includes('Russia')) return 'ru';
 
-           document.addEventListener('paste', function(e) {
-               e.preventDefault();
-               return false;
-           });
-       });
+            return 'en';
+        }
 
-       function initServiceUnavailableModal() {
-           const t = translations[window.currentLang || 'en'];
-           const modal = document.createElement('div');
-           modal.className = 'service-unavailable-modal';
-           modal.innerHTML = `
+        function applyTranslations(lang) {
+            const langKey = translations[lang] ? lang : 'en';
+            const t = translations[langKey];
+
+            document.getElementById('mainTitle').textContent = t.mainTitle;
+            document.getElementById('subTitle').innerHTML = t.subTitle.replace('，', '，<br class="sm:hidden">').replace('. ', '.<br class="sm:hidden">');
+            document.getElementById('labelProduct').textContent = t.labelProduct;
+            document.getElementById('productDisplay').textContent = t.placeholderProduct;
+            document.getElementById('labelVersion').textContent = t.labelVersion;
+            document.getElementById('versionInput').placeholder = t.placeholderVersion;
+            document.getElementById('labelDevice').textContent = t.labelDevice;
+            document.getElementById('deviceDisplay').textContent = t.placeholderDevice;
+            document.getElementById('agreementText').innerHTML = t.agreementText;
+            document.getElementById('btnSubmit').textContent = t.btnSubmit;
+            document.getElementById('modalTitle').textContent = t.modalTitleProduct;
+            document.getElementById('btnCancel').textContent = t.btnCancel;
+            document.getElementById('toastMsg').textContent = t.toastMsg;
+
+            document.documentElement.lang = langKey;
+
+            window.currentLang = langKey;
+        }
+
+        const serviceStatus = "run"; // Service
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const detectedLang = detectLanguageFromUA();
+            applyTranslations(detectedLang);
+
+            document.addEventListener('keydown', function (e) {
+                if ((e.ctrlKey && (e.key === 'c' || e.key === 'x' || e.key === 'v' || e.key === 'a')) ||
+                    (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'i'))) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
+            document.addEventListener('copy', function (e) {
+                e.preventDefault();
+                return false;
+            });
+
+            document.addEventListener('cut', function (e) {
+                e.preventDefault();
+                return false;
+            });
+
+            document.addEventListener('paste', function (e) {
+                e.preventDefault();
+                return false;
+            });
+        });
+
+        function initServiceUnavailableModal() {
+            // 检测语言并在服务停止弹窗中使用
+            const detectedLang = detectLanguageFromUA();
+            const t = translations[detectedLang || 'en'];
+            const modal = document.createElement('div');
+            modal.className = 'service-unavailable-modal';
+            modal.innerHTML = `
                <div class="service-unavailable-content">
                    <h1 class="text-2xl font-bold text-gray-800 mb-4">${t.serviceUnavailableTitle}</h1>
                    <p class="text-gray-500 mb-6">${t.serviceUnavailableDesc}</p>
-                   <a href="mailto:vilinkostudio-link@qq.com" class="inline-block px-6 py-3 bg-[#5279fb] text-white font-medium rounded-xl hover:bg-[#4066e0] transition-colors">
+                   <a href="../" class="inline-block px-6 py-3 bg-[#5279fb] text-white font-medium rounded-xl hover:bg-[#4066e0] transition-colors">
                        ${t.directFeedbackBtn}
                    </a>
                </div>
            `;
-           document.body.appendChild(modal);
-           document.body.style.overflow = 'hidden';
-       }
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+        }
 
-       if (serviceStatus === "stop") {
-           initServiceUnavailableModal();
-       } else {
-           let currentModalType = null;
-           const modal = document.getElementById('selectionModal'), 
-                 modalBackdrop = document.getElementById('modalBackdrop'), 
-                 modalPanel = document.getElementById('modalPanel'), 
-                 modalList = document.getElementById('modalList'), 
-                 modalTitle = document.getElementById('modalTitle'), 
-                 agreementCheck = document.getElementById('agreementCheck'), 
-                 submitBtn = document.getElementById('submitBtn'), 
-                 productInput = document.getElementById('productInput'), 
-                 deviceInput = document.getElementById('deviceInput'), 
-                 versionInput = document.getElementById('versionInput');
+        if (serviceStatus === "stop") {
+            initServiceUnavailableModal();
+        } else {
+            let currentModalType = null;
+            const modal = document.getElementById('selectionModal'),
+                modalBackdrop = document.getElementById('modalBackdrop'),
+                modalPanel = document.getElementById('modalPanel'),
+                modalList = document.getElementById('modalList'),
+                modalTitle = document.getElementById('modalTitle'),
+                agreementCheck = document.getElementById('agreementCheck'),
+                submitBtn = document.getElementById('submitBtn'),
+                productInput = document.getElementById('productInput'),
+                deviceInput = document.getElementById('deviceInput'),
+                versionInput = document.getElementById('versionInput');
 
-           document.addEventListener('DOMContentLoaded', () => {
-               agreementCheck.addEventListener('change', toggleSubmitButton);
-               [productInput, deviceInput, versionInput].forEach(input => {
-                   input.addEventListener('change', toggleSubmitButton);
-                   if(input.type === 'text') input.addEventListener('input', toggleSubmitButton);
-               });
-           });
+            document.addEventListener('DOMContentLoaded', () => {
+                agreementCheck.addEventListener('change', toggleSubmitButton);
+                [productInput, deviceInput, versionInput].forEach(input => {
+                    input.addEventListener('change', toggleSubmitButton);
+                    if (input.type === 'text') input.addEventListener('input', toggleSubmitButton);
+                });
+            });
 
-           function openModal(type) {
-               currentModalType = type;
-               const lang = window.currentLang || 'en';
-               
-               let list = type === 'product' 
-                   ? (productTranslations[lang] || productTranslations['en']) 
-                   : (deviceTranslations[lang] || deviceTranslations['en']);
-               
-               if (type === 'device' && productInput.value) {
-                   const langMap = productKeywordMap[lang] || productKeywordMap['en'];
-                   const originalProduct = langMap[productInput.value] || productInput.value;
-                   
-                   if (originalProduct === 'Lightframe' || originalProduct === 'Universe' || originalProduct === 'Pogget') {
-                       const windowsKeywords = ['Windows-x64', 'Windows-arm64'];
-                       list = list.filter(device => {
-                           return windowsKeywords.some(keyword => device.includes(keyword));
-                       });
-                   }
-               }
-               
-               const t = translations[lang || 'en'];
-               modalTitle.textContent = type === 'product' ? t.modalTitleProduct : t.modalTitleDevice;
-               
-               renderList(list, type);
-               modal.classList.remove('hidden');
-               setTimeout(() => {
-                   modalBackdrop.classList.remove('opacity-0');
-                   modalPanel.classList.remove('opacity-0', 'scale-95');
-                   modalPanel.classList.add('opacity-100', 'scale-100');
-               }, 10);
-           }
+            function openModal(type) {
+                currentModalType = type;
+                const lang = window.currentLang || 'en';
 
-           function closeModal() {
-               modalBackdrop.classList.add('opacity-0');
-               modalPanel.classList.remove('opacity-100', 'scale-100');
-               modalPanel.classList.add('opacity-0', 'scale-95');
-               setTimeout(() => { modal.classList.add('hidden'); currentModalType = null; }, 200);
-           }
+                let list = type === 'product'
+                    ? (productTranslations[lang] || productTranslations['en'])
+                    : (deviceTranslations[lang] || deviceTranslations['en']);
 
-           function renderList(items, type) {
-               modalList.innerHTML = '';
-               items.forEach(item => {
-                   const btn = document.createElement('button');
-                   btn.type = 'button';
-                   btn.className = "vui-control vui-control-base w-full text-left px-4 py-3 text-sm text-gray-700 rounded-lg mb-1 flex items-center hover:bg-blue-50 hover:text-blue-600 transition-colors";
-                   btn.innerHTML = `<span class="w-2 h-2 rounded-full mr-3 bg-gray-300"></span>${item}`;
-                   btn.onclick = () => selectItem(item, type);
-                   modalList.appendChild(btn);
-               });
-           }
+                if (type === 'device' && productInput.value) {
+                    const langMap = productKeywordMap[lang] || productKeywordMap['en'];
+                    const originalProduct = langMap[productInput.value] || productInput.value;
 
-           function selectItem(value, type) {
-               const lang = window.currentLang || 'zh-CN';
-               const t = translations[lang];
-               
-               if (type === 'product') {
-                   productInput.value = value;
-                   const display = document.getElementById('productDisplay');
-                   display.textContent = value;
-                   display.className = "text-gray-800 font-medium";
-                   
-                   const keywords = webProductKeywords[lang] || webProductKeywords['en'];
-                   const isWebProduct = keywords.some(keyword => value.includes(keyword));
-                   
-                   if (isWebProduct) {
-                       versionInput.value = 'web'; 
-                       versionInput.disabled = true; 
-                       versionInput.style.opacity = '0.6'; 
-                   } else { 
-                       versionInput.value = ''; 
-                       versionInput.disabled = false; 
-                       versionInput.style.opacity = '1'; 
-                   }
-               } else {
-                   deviceInput.value = value;
-                   const display = document.getElementById('deviceDisplay');
-                   display.textContent = value;
-                   display.className = "text-gray-800 font-medium";
-               }
-               closeModal();
-               toggleSubmitButton();
-           }
+                    if (originalProduct === 'Lightframe' || originalProduct === 'Universe' || originalProduct === 'Pogget') {
+                        const windowsKeywords = ['Windows-x64', 'Windows-arm64'];
+                        list = list.filter(device => {
+                            return windowsKeywords.some(keyword => device.includes(keyword));
+                        });
+                    }
+                }
 
-           function toggleSubmitButton() {
-               const ok = productInput.value && deviceInput.value && versionInput.value.trim() && agreementCheck.checked;
-               if (ok) {
-                   submitBtn.disabled = false;
-                   submitBtn.style.backgroundColor = '#5279fb';
-                   submitBtn.classList.remove('vui-control-base');
-                   submitBtn.classList.add('vui-control-primary');
-                   submitBtn.classList.remove('cursor-not-allowed');
-               } else {
-                   submitBtn.disabled = true;
-                   submitBtn.style.backgroundColor = '#d1d5db';
-                   submitBtn.classList.remove('vui-control-primary');
-                   submitBtn.classList.add('vui-control-base');
-                   submitBtn.classList.add('cursor-not-allowed');
-               }
-           }
+                const t = translations[lang || 'en'];
+                modalTitle.textContent = type === 'product' ? t.modalTitleProduct : t.modalTitleDevice;
 
-           function showToast(message) {
-               const t = translations[window.currentLang || 'en'];
-               const toast = document.getElementById('toast'), 
-                     toastMsg = document.getElementById('toastMsg');
-               toastMsg.textContent = message || t.toastMsg;
-               toast.classList.remove('opacity-0', 'translate-y-[-20px]');
-               setTimeout(() => { toast.classList.add('opacity-0', 'translate-y-[-20px]'); }, 3000);
-           }
+                renderList(list, type);
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modalBackdrop.classList.remove('opacity-0');
+                    modalPanel.classList.remove('opacity-0', 'scale-95');
+                    modalPanel.classList.add('opacity-100', 'scale-100');
+                }, 10);
+            }
 
-           function handleSubmit() {
-               const currentLang = window.currentLang || 'zh-CN';
-               const productChinese = productToChineseMap[productInput.value] || productInput.value;
-               const deviceChinese = deviceToChineseMap[deviceInput.value] || deviceInput.value;
-               
-               let emailBodyTemplate = `语言版本：{lang}
+            function closeModal() {
+                modalBackdrop.classList.add('opacity-0');
+                modalPanel.classList.remove('opacity-100', 'scale-100');
+                modalPanel.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => { modal.classList.add('hidden'); currentModalType = null; }, 200);
+            }
+
+            function renderList(items, type) {
+                modalList.innerHTML = '';
+                items.forEach(item => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = "vui-control vui-control-base w-full text-left px-4 py-3 text-sm text-gray-700 rounded-lg mb-1 flex items-center hover:bg-blue-50 hover:text-blue-600 transition-colors";
+                    btn.innerHTML = `<span class="w-2 h-2 rounded-full mr-3 bg-gray-300"></span>${item}`;
+                    btn.onclick = () => selectItem(item, type);
+                    modalList.appendChild(btn);
+                });
+            }
+
+            function selectItem(value, type) {
+                const lang = window.currentLang || 'zh-CN';
+                const t = translations[lang];
+
+                if (type === 'product') {
+                    productInput.value = value;
+                    const display = document.getElementById('productDisplay');
+                    display.textContent = value;
+                    display.className = "text-gray-800 font-medium";
+
+                    const keywords = webProductKeywords[lang] || webProductKeywords['en'];
+                    const isWebProduct = keywords.some(keyword => value.includes(keyword));
+
+                    if (isWebProduct) {
+                        versionInput.value = 'web';
+                        versionInput.disabled = true;
+                        versionInput.style.opacity = '0.6';
+                    } else {
+                        versionInput.value = '';
+                        versionInput.disabled = false;
+                        versionInput.style.opacity = '1';
+                    }
+                } else {
+                    deviceInput.value = value;
+                    const display = document.getElementById('deviceDisplay');
+                    display.textContent = value;
+                    display.className = "text-gray-800 font-medium";
+                }
+                closeModal();
+                toggleSubmitButton();
+            }
+
+            function toggleSubmitButton() {
+                const ok = productInput.value && deviceInput.value && versionInput.value.trim() && agreementCheck.checked;
+                if (ok) {
+                    submitBtn.disabled = false;
+                    submitBtn.style.backgroundColor = '#5279fb';
+                    submitBtn.classList.remove('vui-control-base');
+                    submitBtn.classList.add('vui-control-primary');
+                    submitBtn.classList.remove('cursor-not-allowed');
+                } else {
+                    submitBtn.disabled = true;
+                    submitBtn.style.backgroundColor = '#d1d5db';
+                    submitBtn.classList.remove('vui-control-primary');
+                    submitBtn.classList.add('vui-control-base');
+                    submitBtn.classList.add('cursor-not-allowed');
+                }
+            }
+
+            function showToast(message) {
+                const t = translations[window.currentLang || 'en'];
+                const toast = document.getElementById('toast'),
+                    toastMsg = document.getElementById('toastMsg');
+                toastMsg.textContent = message || t.toastMsg;
+                toast.classList.remove('opacity-0', 'translate-y-[-20px]');
+                setTimeout(() => { toast.classList.add('opacity-0', 'translate-y-[-20px]'); }, 3000);
+            }
+
+            function handleSubmit() {
+                const currentLang = window.currentLang || 'zh-CN';
+                const productChinese = productToChineseMap[productInput.value] || productInput.value;
+                const deviceChinese = deviceToChineseMap[deviceInput.value] || deviceInput.value;
+
+                let emailBodyTemplate = `语言版本：{lang}
 {product}，版本为{version}。使用{device}时遇到问题。
 
 请说明问题：`;
-               
-               const isLightframe = productInput.value.toLowerCase() === 'lightframe';
-               if (isLightframe) {
-                   const t = translations[currentLang];
-                   const guideText = t.lightframeGuide || translations['en'].lightframeGuide;
-                   
-                   emailBodyTemplate = `语言版本：{lang}
+
+                const isLightframe = productInput.value.toLowerCase() === 'lightframe';
+                if (isLightframe) {
+                    const t = translations[currentLang];
+                    const guideText = t.lightframeGuide || translations['en'].lightframeGuide;
+
+                    emailBodyTemplate = `语言版本：{lang}
 {product}，版本为{version}。使用{device}时遇到问题。
 
 ${guideText}
 
 请说明问题：`;
-               }
-               
-               const bodyContent = emailBodyTemplate
-                   .replace('{lang}', currentLang)
-                   .replace('{product}', productChinese)
-                   .replace('{version}', versionInput.value)
-                   .replace('{device}', deviceChinese);
-               
-               const t = translations[currentLang];
-               const subject = encodeURIComponent(t.emailSubject);
-               const body = encodeURIComponent(bodyContent);
-               
-               window.location.href = `mailto:vilinkostudio-link@qq.com?subject=${subject}&body=${body}`;
-           }
-       }
-   </script>
+                }
+
+                const bodyContent = emailBodyTemplate
+                    .replace('{lang}', currentLang)
+                    .replace('{product}', productChinese)
+                    .replace('{version}', versionInput.value)
+                    .replace('{device}', deviceChinese);
+
+                const t = translations[currentLang];
+                const subject = encodeURIComponent(t.emailSubject);
+                const body = encodeURIComponent(bodyContent);
+
+                window.location.href = `mailto:vilinkostudio-link@qq.com?subject=${subject}&body=${body}`;
+            }
+        }
+    </script>
 </body>
+
 </html>

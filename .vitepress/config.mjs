@@ -21,7 +21,7 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: '首页', link: '/' },
-          { text: '下载程序', link: '/download/index' },
+          { text: '下载程序', link: '/download/' },
         ],
         footer: {
           copyright: 'Copyright © 2019 - 2026 Vilinko Studio. All Rights Reserved.',
@@ -46,7 +46,7 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: 'Home', link: '/en/' },
-          { text: 'Download', link: '/en/download/index' },
+          { text: 'Download', link: '/en/download/' },
         ],
         footer: {
           copyright: 'Copyright © 2019 - 2026 Vilinko Studio. All Rights Reserved.',
@@ -57,7 +57,6 @@ export default defineConfig({
         lightModeSwitchTitle: 'Switch to Light Mode',
         darkModeSwitchTitle: 'Switch to Dark Mode',
         sidebarMenuLabel: 'Menu',
-        returnToTopLabel: 'Back to Top',
         docFooter: { prev: 'Previous', next: 'Next' },
         onThisPage: 'On This Page',
         sidebar: createSidebar('en'),
