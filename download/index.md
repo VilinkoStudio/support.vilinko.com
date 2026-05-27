@@ -5,6 +5,10 @@
 在您点击下载按钮后，默认您已经同意我们的[《服务条款》](https://docs.vilinko.com/agreement/tos.html)和[《隐私政策》](https://docs.vilinko.com/agreement/privacy.html)。
 :::
 
+::: tip 安装提示
+不可下载的程序可能处于开发或邀测状态，感谢您的理解。
+:::
+
 ## LightFrame 1.0
 
 ::: info 安装提示
@@ -27,6 +31,7 @@
 
 - [Windows X64](https://down1.vilinko.com/download/pogget.zip)
 - [Windows Arm64](https://down1.vilinko.com/download/pogget_arm64.zip)
+- [Pogget PDB X64](https://down1.vilinko.com/download/pogget_pdb.zip)<span style="color: #F0753C;">【仅供调试使用】</span>
 
 ## Vilinko Universe
 
@@ -38,3 +43,11 @@
 
 ## Vui.parser
 - [点击打开网页版](https://haceau-zoac.github.io/vui.parser/)
+
+## Synap
+
+::: info 安装提示
+此应用适用于 Android 12.0 及以上版本。
+:::
+
+- Android

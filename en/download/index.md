@@ -5,6 +5,11 @@ If you are unable to find the correct installation address through a search engi
 By clicking the download button, you agree to our [Terms of Service](https://docs.vilinko.com/en/agreement/tos.html) and [Privacy Policy](https://docs.vilinko.com/en/agreement/privacy.html).
 :::
 
+::: tip 
+The program may be in development or beta testing.      
+Thank you for your understanding.
+:::
+
 ## LightFrame 1.0
 
 ::: info
@@ -27,6 +32,7 @@ This application is compatible with Windows 10 and above.
 
 - [Windows X64](https://down1.vilinko.com/download/pogget.zip)
 - [Windows Arm64](https://down1.vilinko.com/download/pogget_arm64.zip)
+- [Pogget PDB X64](https://down1.vilinko.com/download/pogget_pdb.zip)<span style="color: #F0753C;">【DEBUG】</span>
 
 ## Vilinko Universe
 
@@ -38,3 +44,11 @@ This application is compatible with Windows 10 and above.
 
 ## Vui.parser
 - [Click to open web version](https://haceau-zoac.github.io/vui.parser/)
+
+## Synap
+
+::: info
+This application is compatible with Android 12.0 and above.
+:::
+
+- Android
