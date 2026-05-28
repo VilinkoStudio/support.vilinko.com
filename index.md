@@ -23,9 +23,5 @@ features:
   - icon: 📧
     title: 邮箱反馈
     details: 发送详细问题描述至官方邮箱。
-    link: https://support.vilinko.com/email.htm
-  - icon: 📋
-    title: 工单查询
-    details: 
-    link: https://vilinko-studio.feishu.cn/share/base/query/shrcnwYOGQE7jVSiJ87yN9Lxuxb
+    link: https://f.wps.cn/g/2Rki7Shx/
 ---

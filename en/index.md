@@ -22,9 +22,5 @@ features:
   - icon: 📧
     title: Email feedback
     details: Send a detailed problem description to the official email address.
-    link: https://support.vilinko.com/email.htm
-  - icon: 📋
-    title: Work order inquiry
-    details: 
-    link: https://vilinko-studio.feishu.cn/share/base/query/shrcnwYOGQE7jVSiJ87yN9Lxuxb
+    link: https://f.wps.cn/g/2Rki7Shx/
 ---
