@@ -22,5 +22,5 @@ features:
   - icon: 📧
     title: Email feedback
     details: Send a detailed problem description to the official email address.
-    link: https://f.wps.cn/g/2Rki7Shx/
+    link: https://support.vilinko.com/email.htm
 ---

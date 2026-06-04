@@ -23,5 +23,5 @@ features:
   - icon: 📧
     title: 邮箱反馈
     details: 发送详细问题描述至官方邮箱。
-    link: https://f.wps.cn/g/2Rki7Shx/
+    link: https://support.vilinko.com/email.htm
 ---
