@@ -32,7 +32,7 @@ This application is compatible with Windows 10 and above.
 
 - [Windows X64](https://down1.vilinko.com/download/pogget.zip)
 - [Windows Arm64](https://down1.vilinko.com/download/pogget_arm64.zip)
-- [Pogget PDB X64](https://down1.vilinko.com/download/pogget_pdb.zip)<span style="color: #F0753C;">【DEBUG】</span>
+- [Pogget PDB X64](https://down1.vilinko.com/download/pogget_pdb.zip)<span style="color: #F0753C;"> DEBUG</span>
 
 ## Vilinko Universe
 
@@ -51,4 +51,4 @@ This application is compatible with Windows 10 and above.
 This application is compatible with Android 12.0 and above.
 :::
 
-- Android
+- [Android](https://github.com/VilinkoStudio/Synap/releases/download/android-v1.0.0-alpha.8%23/synap-android-v1.0.0-alpha.8.-app-release.apk)

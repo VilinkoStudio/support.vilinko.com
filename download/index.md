@@ -31,7 +31,7 @@
 
 - [Windows X64](https://down1.vilinko.com/download/pogget.zip)
 - [Windows Arm64](https://down1.vilinko.com/download/pogget_arm64.zip)
-- [Pogget PDB X64](https://down1.vilinko.com/download/pogget_pdb.zip)<span style="color: #F0753C;">【仅供调试使用】</span>
+- [Pogget PDB X64](https://down1.vilinko.com/download/pogget_pdb.zip)<span style="color: #F0753C;"> DEBUG</span>
 
 ## Vilinko Universe
 
@@ -50,4 +50,4 @@
 此应用适用于 Android 12.0 及以上版本。
 :::
 
-- Android
+- [Android](https://github.com/VilinkoStudio/Synap/releases/download/android-v1.0.0-alpha.8%23/synap-android-v1.0.0-alpha.8.-app-release.apk)
