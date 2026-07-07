@@ -9,7 +9,7 @@ hero:
       link: https://docs.vilinko.com
     - theme: alt
       text: 腾讯频道
-      link: https://pd.qq.com/s/fnd9tarkb
+      link: https://pd.qq.com/g/csm3ip9s49
 
 features:
   - icon: 📖

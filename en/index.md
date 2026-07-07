@@ -9,7 +9,7 @@ hero:
       link: https://docs.vilinko.com/en/
     - theme: alt
       text: QQ Channels
-      link: https://pd.qq.com/s/fnd9tarkb
+      link: https://pd.qq.com/g/csm3ip9s49
 features:
   - icon: 📖
     title: Frequently Asked Questions

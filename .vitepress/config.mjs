@@ -69,7 +69,7 @@ export default defineConfig({
 
     socialLinks: [
       { icon: 'xiaohongshu', link: 'https://www.xiaohongshu.com/user/profile/68fa354900000000320280e5' },
-      { icon: 'qq', link: 'https://pd.qq.com/s/fnd9tarkb' },
+      { icon: 'qq', link: 'https://pd.qq.com/g/csm3ip9s49' },
       { icon: 'wechat', link: 'https://support.vilinko.com/wechat.htm' },
       {
         icon: {
