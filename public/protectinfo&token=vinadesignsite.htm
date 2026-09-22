@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>开发者服务中心 · 安全跳转提示</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --md-ref-palette-primary: #5279FB;
+      --md-ref-palette-onPrimary: #FFFFFF;
+      --md-ref-palette-primaryContainer: #E0E0FC;
+      --md-ref-palette-onPrimaryContainer: #061844;
+      --md-ref-palette-secondary: #5A5C7C;
+      --md-ref-palette-secondaryContainer: #E0E0FE;
+      --md-ref-palette-onSecondaryContainer: #151935;
+      --md-ref-palette-tertiaryContainer: #FFD8E7;
+      --md-ref-palette-onTertiaryContainer: #3C0322;
+      --md-ref-palette-surface: #F9F9FF;
+      --md-ref-palette-surfaceContainerLow: #F3F3F9;
+      --md-ref-palette-surfaceContainer: #EDEDF3;
+      --md-ref-palette-surfaceContainerHigh: #E8E8ED;
+      --md-ref-palette-surfaceContainerHighest: #E2E2E8;
+      --md-ref-palette-onSurface: #1B1B1F;
+      --md-ref-palette-onSurfaceVariant: #464651;
+      --md-ref-palette-outline: #767682;
+      --md-ref-palette-outlineVariant: #C6C5D2;
+      --md-ref-palette-inverseSurface: #303034;
+      --md-ref-palette-inverseOnSurface: #F0F0F6;
+      --md-ref-palette-inversePrimary: #C0C2FD;
+      --md-ref-palette-error: #B3261E;
+      --md-ref-palette-onError: #FFFFFF;
+      --md-ref-palette-errorContainer: #F9DEDC;
+      --md-ref-palette-onErrorContainer: #410E0B;
+      --md-sys-color-primary: var(--md-ref-palette-primary);
+      --md-sys-color-onPrimary: var(--md-ref-palette-onPrimary);
+      --md-sys-color-primaryContainer: var(--md-ref-palette-primaryContainer);
+      --md-sys-color-onPrimaryContainer: var(--md-ref-palette-onPrimaryContainer);
+      --md-sys-color-secondary: var(--md-ref-palette-secondary);
+      --md-sys-color-secondaryContainer: var(--md-ref-palette-secondaryContainer);
+      --md-sys-color-onSecondaryContainer: var(--md-ref-palette-onSecondaryContainer);
+      --md-sys-color-tertiaryContainer: var(--md-ref-palette-tertiaryContainer);
+      --md-sys-color-onTertiaryContainer: var(--md-ref-palette-onTertiaryContainer);
+      --md-sys-color-surface: var(--md-ref-palette-surface);
+      --md-sys-color-surfaceContainerLow: var(--md-ref-palette-surfaceContainerLow);
+      --md-sys-color-surfaceContainer: var(--md-ref-palette-surfaceContainer);
+      --md-sys-color-surfaceContainerHigh: var(--md-ref-palette-surfaceContainerHigh);
+      --md-sys-color-surfaceContainerHighest: var(--md-ref-palette-surfaceContainerHighest);
+      --md-sys-color-onSurface: var(--md-ref-palette-onSurface);
+      --md-sys-color-onSurfaceVariant: var(--md-ref-palette-onSurfaceVariant);
+      --md-sys-color-outline: var(--md-ref-palette-outline);
+      --md-sys-color-outlineVariant: var(--md-ref-palette-outlineVariant);
+      --md-sys-color-inverseSurface: var(--md-ref-palette-inverseSurface);
+      --md-sys-color-inverseOnSurface: var(--md-ref-palette-inverseOnSurface);
+      --md-sys-color-inversePrimary: var(--md-ref-palette-inversePrimary);
+      --md-sys-color-error: var(--md-ref-palette-error);
+      --md-sys-color-onError: var(--md-ref-palette-onError);
+      --md-sys-color-errorContainer: var(--md-ref-palette-errorContainer);
+      --md-sys-color-onErrorContainer: var(--md-ref-palette-onErrorContainer);
+      --md-sys-shape-corner-extra-small: 4px;
+      --md-sys-shape-corner-small: 8px;
+      --md-sys-shape-corner-medium: 12px;
+      --md-sys-shape-corner-large: 16px;
+      --md-sys-shape-corner-extra-large: 28px;
+      --md-sys-shape-corner-full: 9999px;
+      --md-sys-spacing-4: 4px;
+      --md-sys-spacing-8: 8px;
+      --md-sys-spacing-12: 12px;
+      --md-sys-spacing-16: 16px;
+      --md-sys-spacing-24: 24px;
+      --md-sys-typescale-title-large: 22px;
+      --md-sys-typescale-title-medium: 16px;
+      --md-sys-typescale-body-large: 16px;
+      --md-sys-typescale-body-medium: 14px;
+      --md-sys-typescale-label-large: 14px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --md-sys-color-primary: #C0C2FD;
+        --md-sys-color-onPrimary: #062C70;
+        --md-sys-color-primaryContainer: #07409F;
+        --md-sys-color-onPrimaryContainer: #E0E0FC;
+        --md-sys-color-secondary: #C3C3E9;
+        --md-sys-color-secondaryContainer: #424463;
+        --md-sys-color-onSecondaryContainer: #E0E0FE;
+        --md-sys-color-tertiaryContainer: #6E334E;
+        --md-sys-color-onTertiaryContainer: #FFD8E7;
+        --md-sys-color-surface: #131317;
+        --md-sys-color-surfaceContainerLow: #1B1B1F;
+        --md-sys-color-surfaceContainer: #1F1F23;
+        --md-sys-color-surfaceContainerHigh: #2A2A2E;
+        --md-sys-color-surfaceContainerHighest: #343439;
+        --md-sys-color-onSurface: #E2E2E8;
+        --md-sys-color-onSurfaceVariant: #C6C5D2;
+        --md-sys-color-outline: #90909C;
+        --md-sys-color-outlineVariant: #464651;
+        --md-sys-color-inverseSurface: #E2E2E8;
+        --md-sys-color-inverseOnSurface: #303034;
+        --md-sys-color-inversePrimary: #3857BA;
+        --md-sys-color-error: #F2B8B5;
+        --md-sys-color-onError: #601410;
+        --md-sys-color-errorContainer: #8C1D18;
+        --md-sys-color-onErrorContainer: #F9DEDC;
+      }
+    }
+
+    html, body {
+      height: 100%;
+      background-color: var(--md-sys-color-surface);
+      font-family: 'Roboto', system-ui, -apple-system, sans-serif;
+      color: var(--md-sys-color-onSurface);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 16px;
+    }
+
+    .screen {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .prompt-container {
+      width: 656px;
+      max-width: 100%;
+      height: 364px;
+      max-height: calc(100vh - 32px);
+      background-color: var(--md-sys-color-surfaceContainerHigh);
+      border-radius: var(--md-sys-shape-corner-extra-large);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      isolation: isolate;
+    }
+
+    .prompt-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      text-align: center;
+    }
+
+    .prompt-title {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--md-sys-color-onSurface);
+      margin-bottom: 16px;
+      letter-spacing: 0.01em;
+    }
+
+    .prompt-description {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--md-sys-color-onSurfaceVariant);
+      max-width: 480px;
+      margin: 0 auto;
+      letter-spacing: 0.02em;
+    }
+
+    .prompt-hint {
+      font-size: 14px;
+      color: var(--md-sys-color-primary);
+      margin-top: 20px;
+      font-weight: 500;
+      opacity: 0.9;
+    }
+
+    .prompt-container {
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .ripple-effect {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.15s cubic-bezier(0.2, 0, 0, 1);
+    }
+    .ripple-effect:active {
+      transform: scale(0.98);
+    }
+
+    @media (max-width: 700px) {
+      .prompt-container {
+        width: 100%;
+        height: auto;
+        min-height: 320px;
+        padding: 32px 20px;
+      }
+      .prompt-title {
+        font-size: 24px;
+      }
+    }
+
+    /* 小高度适配 */
+    @media (max-height: 450px) {
+      .prompt-container {
+        height: auto;
+        min-height: 240px;
+        padding: 24px 16px;
+      }
+      .prompt-title {
+        font-size: 24px;
+        margin-bottom: 8px;
+      }
+    }
+
+    .prompt-description span {
+      color: var(--md-sys-color-onSurfaceVariant);
+    }
+
+    .material-symbols-rounded {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .accent {
+      color: var(--md-sys-color-primary);
+      font-weight: 500;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="screen">
+    <div class="prompt-container" role="alert" aria-live="polite">
+      <div class="prompt-content">
+        <h1 class="prompt-title">开发者服务中心提示</h1>
+        <p class="prompt-description">
+          即将离开当前页面，跳转至外部开发者服务中心。<br>
+          请确认链接安全，五秒后自动跳转。
+        </p>
+        <div class="prompt-hint" aria-hidden="true">
+          https://vilinkostudio.github.io/VinaDesignSite/
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const targetUrl = 'https://vilinkostudio.github.io/VinaDesignSite/';
+      const REDIRECT_DELAY_MS = 5000;
+
+      setTimeout(() => {
+        window.location.assign(targetUrl);
+      }, REDIRECT_DELAY_MS);
+    })();
+  </script>
+</body>
+</html>

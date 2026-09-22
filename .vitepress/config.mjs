@@ -21,6 +21,7 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: '首页', link: '/' },
+          { text: '开发者服务', link: '/docs/developer/index' },
           { text: '下载程序', link: '/download/' },
         ],
         footer: {
@@ -46,6 +47,7 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: 'Home', link: '/en/' },
+          { text: 'Developer', link: '/en/docs/developer/index' },
           { text: 'Download', link: '/en/download/' },
         ],
         footer: {
