@@ -3,6 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
 <title>快捷服务 | 浏览器环境与能力检测</title>
 <script type="text/javascript">
 var legacyMode = /MSIE [67]\./.test(navigator.userAgent);
@@ -56,9 +57,9 @@ h2 {
     border: 1px solid #ddd;
     background: #fafafa;
 }
-.summary.ok   { background: #e8f5e9; color: #2e7d32; border-color: #c8e6c9; }
-.summary.warn { background: #fff8e1; color: #b26a00; border-color: #ffe0b2; }
-.summary.fail { background: #fdecea; color: #c62828; border-color: #f5c6cb; }
+.summary.ok   { background: #e8f8f5; color: #1abc9c; border-color: #b5e8dd; }
+.summary.warn { background: #fef0e9; color: #f0753c; border-color: #f8d5c0; }
+.summary.fail { background: #fdeeee; color: #e64c4f; border-color: #f5c6c7; }
 table { width: 100%; border-collapse: collapse; }
 th, td {
     padding: 6px 6px;
@@ -93,9 +94,9 @@ th.status-head { text-align: center; }
 }
 .env td.mono-wrap { line-height: 1.6; }
 .status-cell { text-align: center; font-size: 15px; width: 40px; }
-.fa-check-circle         { color: #2e7d32; }
-.fa-exclamation-triangle { color: #f9a825; }
-.fa-times-circle         { color: #c62828; }
+.fa-check-circle         { color: #1abc9c; }
+.fa-exclamation-triangle { color: #f0753c; }
+.fa-times-circle         { color: #e64c4f; }
 .legacy-icon {
     display: inline-block;
     width: 16px;
@@ -108,9 +109,9 @@ th.status-head { text-align: center; }
     vertical-align: middle;
     font-family: Tahoma, Arial, sans-serif;
 }
-.legacy-icon.ok   { background-color: #2e7d32; }
-.legacy-icon.warn { background-color: #f9a825; color: #333; }
-.legacy-icon.fail { background-color: #c62828; }
+.legacy-icon.ok   { background-color: #1abc9c; }
+.legacy-icon.warn { background-color: #f0753c; }
+.legacy-icon.fail { background-color: #e64c4f; }
 .note {
     margin-top: 18px;
     font-size: 11px;
@@ -118,6 +119,60 @@ th.status-head { text-align: center; }
     line-height: 1.75;
     border-top: 1px solid #eee;
     padding-top: 10px;
+}
+
+/* 深色模式：仅在浏览器支持 prefers-color-scheme 且系统偏好深色时生效；
+   不支持该媒体查询的内核（含 IE6/7）会忽略整块，保持上方白色默认。 */
+@media (prefers-color-scheme: dark) {
+    body {
+        color: #e0e0e0;
+        background: #1a1a1a;
+    }
+    #wrapper {
+        background: #252525;
+        border-color: #3a3a3a;
+    }
+    h1 { color: #f0f0f0; }
+    .subtitle { color: #888; }
+    h2 {
+        color: #aaa;
+        border-bottom-color: #3a3a3a;
+    }
+    th {
+        color: #999;
+        background: #2e2e2e;
+        border-bottom-color: #3a3a3a;
+    }
+    td { border-bottom-color: #333; }
+    .env th {
+        background: #2a2a2a;
+        color: #aaa;
+        border-right-color: #333;
+    }
+    .env td { color: #ddd; }
+    .summary {
+        border-color: #3a3a3a;
+        background: #2a2a2a;
+    }
+    .summary.ok {
+        background: rgba(26, 188, 156, 0.12);
+        color: #1abc9c;
+        border-color: rgba(26, 188, 156, 0.35);
+    }
+    .summary.warn {
+        background: rgba(240, 117, 60, 0.12);
+        color: #f0753c;
+        border-color: rgba(240, 117, 60, 0.35);
+    }
+    .summary.fail {
+        background: rgba(230, 76, 79, 0.12);
+        color: #e64c4f;
+        border-color: rgba(230, 76, 79, 0.35);
+    }
+    .note {
+        color: #777;
+        border-top-color: #333;
+    }
 }
 </style>
 </head>
@@ -217,12 +272,19 @@ function collectEnvironment() {
         ? String(navigator.maxTouchPoints) : '未提供';
     var docMode = typeof document.documentMode !== 'undefined'
         ? String(document.documentMode) : '—';
+    var scheme = '未提供';
+    if (window.matchMedia) {
+        var mq = window.matchMedia('(prefers-color-scheme: dark)');
+        if (mq.media && mq.media !== 'not all') {
+            scheme = mq.matches ? '深色（跟随系统）' : '浅色（跟随系统）';
+        }
+    }
 
     return [
         ['UserAgent',      escapeHtml(navigator.userAgent), 'mono-wrap'],
         ['浏览器',         escapeHtml(info.name)],
         ['渲染引擎',       escapeHtml(info.engine)],
-        ['浏览器版本', info.version ? escapeHtml(String(info.version)) : '未知'],
+        ['浏览器版本',     info.version ? escapeHtml(String(info.version)) : '未知'],
         ['平台',           escapeHtml(navigator.platform || '未知')],
         ['界面语言',       escapeHtml(lang || '未知')],
         ['屏幕分辨率',     escapeHtml(screenText || '未知')],
@@ -233,7 +295,8 @@ function collectEnvironment() {
         ['网络状态',       escapeHtml(online)],
         ['逻辑 CPU 核心',  escapeHtml(cores)],
         ['触摸点数',       escapeHtml(touch)],
-        ['文档模式',       escapeHtml(docMode)]
+        ['文档模式',       escapeHtml(docMode)],
+        ['外观偏好',       escapeHtml(scheme)]
     ];
 }
 
