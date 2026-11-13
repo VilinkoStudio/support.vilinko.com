@@ -1,0 +1,524 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>快捷服务 | 浏览器环境与能力检测</title>
+<script type="text/javascript">
+var legacyMode = /MSIE [67]\./.test(navigator.userAgent);
+if (!legacyMode) {
+    document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">');
+}
+document.write('<style type="text/css">');
+if (legacyMode) {
+    document.write('.fa{display:none!important}');
+    document.write('.legacy-icon{display:inline-block!important;*display:inline;*zoom:1}');
+} else {
+    document.write('.legacy-icon{display:none!important}');
+}
+document.write('</style>');
+</script>
+<style type="text/css">
+* { margin: 0; padding: 0; }
+body {
+    font-family: Tahoma, "Microsoft YaHei", Arial, sans-serif;
+    font-size: 13px;
+    color: #333;
+    background: #f6f6f6;
+    text-align: center;
+    padding: 28px 0;
+    line-height: 1.5;
+}
+#wrapper {
+    text-align: left;
+    width: 780px;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    padding: 24px 28px 18px;
+}
+h1 { font-size: 18px; font-weight: bold; color: #222; margin-bottom: 4px; }
+.subtitle { font-size: 12px; color: #999; margin-bottom: 16px; }
+h2 {
+    font-size: 12px;
+    font-weight: bold;
+    color: #555;
+    margin: 18px 0 7px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #e8e8e8;
+    letter-spacing: 0.5px;
+}
+.summary {
+    padding: 9px 14px;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 14px 0 16px;
+    border: 1px solid #ddd;
+    background: #fafafa;
+}
+.summary.ok   { background: #e8f5e9; color: #2e7d32; border-color: #c8e6c9; }
+.summary.warn { background: #fff8e1; color: #b26a00; border-color: #ffe0b2; }
+.summary.fail { background: #fdecea; color: #c62828; border-color: #f5c6cb; }
+table { width: 100%; border-collapse: collapse; }
+th, td {
+    padding: 6px 6px;
+    border-bottom: 1px solid #f2f2f2;
+    vertical-align: top;
+    text-align: left;
+    font-size: 12px;
+}
+th {
+    font-weight: bold;
+    color: #777;
+    background: #fafafa;
+    border-bottom: 1px solid #e8e8e8;
+    font-size: 11px;
+}
+/* “状态”列表头居中 */
+th.status-head { text-align: center; }
+.env th {
+    width: 110px;
+    background: #fbfbfb;
+    color: #666;
+    font-weight: normal;
+    border-right: 1px solid #f2f2f2;
+    white-space: nowrap;
+}
+.env td {
+    color: #222;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 12px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+.env td.mono-wrap { line-height: 1.6; }
+.status-cell { text-align: center; font-size: 15px; width: 40px; }
+.fa-check-circle         { color: #2e7d32; }
+.fa-exclamation-triangle { color: #f9a825; }
+.fa-times-circle         { color: #c62828; }
+.legacy-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 11px;
+    color: #fff;
+    vertical-align: middle;
+    font-family: Tahoma, Arial, sans-serif;
+}
+.legacy-icon.ok   { background-color: #2e7d32; }
+.legacy-icon.warn { background-color: #f9a825; color: #333; }
+.legacy-icon.fail { background-color: #c62828; }
+.note {
+    margin-top: 18px;
+    font-size: 11px;
+    color: #999;
+    line-height: 1.75;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+</style>
+</head>
+<body>
+<div id="wrapper">
+    <h1>浏览器检测</h1>
+
+    <div id="summary" class="summary">正在检测...</div>
+
+    <h2>用户环境信息</h2>
+    <table class="env">
+        <tbody id="envTable"></tbody>
+    </table>
+
+    <h2>API</h2>
+    <table>
+        <thead>
+            <tr><th width="205">特性</th><th width="42" class="status-head">状态</th><th>说明</th></tr>
+        </thead>
+        <tbody id="jsTable"></tbody>
+        <tbody id="cssTable"></tbody>
+    </table>
+
+    <p class="note">
+        图标含义：绿色勾表示该特性可用；黄色警告表示缺失，但只影响对应的视觉或交互效果；红色叉表示核心 API 缺失，依赖它的脚本将无法运行。<br>
+        环境信息仅在本页本地计算，不会发送到任何服务器。IE6 / IE7 不加载 Web 字体，图标自动降级为彩色方块符号。<br>
+        <span style="text-align: center;">Copyright © 2026 Vilinko Studio</span>
+    </p>
+</div>
+
+<script type="text/javascript">
+function safe(fn) {
+    try { return fn(); } catch (e) { return false; }
+}
+function escapeHtml(s) {
+    return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+function pad2(n) { return (n < 10 ? '0' : '') + n; }
+
+function detectBrowser() {
+    var ua = navigator.userAgent, m;
+    if ((m = ua.match(/MSIE\s(\d+\.\d+)/))) {
+        return { engine: 'Trident', name: 'Internet Explorer', version: parseFloat(m[1]) };
+    }
+    if ((m = ua.match(/Trident\/.*rv:(\d+\.\d+)/))) {
+        return { engine: 'Trident', name: 'Internet Explorer', version: parseFloat(m[1]) };
+    }
+    if ((m = ua.match(/Edg\/(\d+)/))) {
+        return { engine: 'Chromium', name: 'Microsoft Edge', version: parseInt(m[1], 10) };
+    }
+    if ((m = ua.match(/OPR\/(\d+)/))) {
+        return { engine: 'Chromium', name: 'Opera', version: parseInt(m[1], 10) };
+    }
+    if ((m = ua.match(/Chrome\/(\d+)/))) {
+        return { engine: 'Chromium', name: 'Chrome', version: parseInt(m[1], 10) };
+    }
+    if ((m = ua.match(/Firefox\/(\d+)/))) {
+        return { engine: 'Gecko', name: 'Firefox', version: parseInt(m[1], 10) };
+    }
+    if ((m = ua.match(/Version\/(\d+).*Safari/))) {
+        return { engine: 'WebKit', name: 'Safari', version: parseInt(m[1], 10) };
+    }
+    return { engine: 'Unknown', name: '未知浏览器', version: 0 };
+}
+
+function collectEnvironment() {
+    var info = detectBrowser();
+    var lang = navigator.language || navigator.userLanguage
+            || navigator.browserLanguage || navigator.systemLanguage || '';
+    var off = new Date().getTimezoneOffset();
+    var sign = off <= 0 ? '+' : '-';
+    var abs = Math.abs(off);
+    var tz = 'UTC' + sign + pad2(Math.floor(abs / 60)) + ':' + pad2(abs % 60);
+    var screenText = '';
+    if (window.screen) {
+        screenText = screen.width + ' × ' + screen.height;
+        if (typeof screen.availWidth !== 'undefined') {
+            screenText += '　可用 ' + screen.availWidth + ' × ' + screen.availHeight;
+        }
+    }
+    var dpr = window.devicePixelRatio ? window.devicePixelRatio : 1;
+    var cookie = '未知';
+    if (typeof navigator.cookieEnabled !== 'undefined') {
+        cookie = navigator.cookieEnabled ? '已启用' : '已禁用';
+    }
+    var online = '未知';
+    if (typeof navigator.onLine !== 'undefined') {
+        online = navigator.onLine ? '在线' : '离线';
+    }
+    var cores = navigator.hardwareConcurrency
+        ? String(navigator.hardwareConcurrency) : '未提供';
+    var touch = typeof navigator.maxTouchPoints !== 'undefined'
+        ? String(navigator.maxTouchPoints) : '未提供';
+    var docMode = typeof document.documentMode !== 'undefined'
+        ? String(document.documentMode) : '—';
+
+    return [
+        ['UserAgent',      escapeHtml(navigator.userAgent), 'mono-wrap'],
+        ['浏览器',         escapeHtml(info.name)],
+        ['渲染引擎',       escapeHtml(info.engine)],
+        ['浏览器版本', info.version ? escapeHtml(String(info.version)) : '未知'],
+        ['平台',           escapeHtml(navigator.platform || '未知')],
+        ['界面语言',       escapeHtml(lang || '未知')],
+        ['屏幕分辨率',     escapeHtml(screenText || '未知')],
+        ['颜色深度',       window.screen && screen.colorDepth ? screen.colorDepth + ' 位' : '未知'],
+        ['设备像素比',     escapeHtml(String(dpr))],
+        ['时区',           escapeHtml(tz)],
+        ['Cookie',         escapeHtml(cookie)],
+        ['网络状态',       escapeHtml(online)],
+        ['逻辑 CPU 核心',  escapeHtml(cores)],
+        ['触摸点数',       escapeHtml(touch)],
+        ['文档模式',       escapeHtml(docMode)]
+    ];
+}
+
+function hasOptionalChaining() {
+    return safe(function () {
+        new Function('var a = {}; return a?.b;');
+        new Function('var a = null; return a ?? 1;');
+        return true;
+    });
+}
+function hasAsync() {
+    return safe(function () {
+        new Function('return async function(){};');
+        return true;
+    });
+}
+function hasModule() {
+    return safe(function () { return 'noModule' in document.createElement('script'); });
+}
+function hasRegexUnicodeProp() {
+    return safe(function () { new RegExp('\\p{L}', 'u'); return true; });
+}
+function hasFlatMap() {
+    return typeof Array.prototype.flatMap === 'function';
+}
+function hasPadStart() {
+    return typeof String.prototype.padStart === 'function';
+}
+function hasTrimStart() {
+    return typeof String.prototype.trimStart === 'function';
+}
+function hasObjectHasOwn() {
+    return typeof Object.hasOwn === 'function';
+}
+function hasArrayAt() {
+    return typeof Array.prototype.at === 'function';
+}
+function hasFromEntries() {
+    return typeof Object.fromEntries === 'function';
+}
+function hasBigIntDataView() {
+    return safe(function () {
+        return typeof window.BigInt === 'function'
+            && typeof DataView !== 'undefined'
+            && typeof DataView.prototype.getBigUint64 === 'function';
+    });
+}
+function hasPointerEvents() {
+    return safe(function () {
+        return typeof window.PointerEvent === 'function'
+            && typeof document.documentElement.setPointerCapture === 'function';
+    });
+}
+function hasClosest() {
+    return safe(function () { return typeof document.documentElement.closest === 'function'; });
+}
+function hasDOMPoint() {
+    return typeof window.DOMPoint === 'function';
+}
+function hasSvgHitTest() {
+    return safe(function () {
+        return typeof window.SVGGeometryElement !== 'undefined'
+            && typeof SVGGeometryElement.prototype.isPointInFill === 'function'
+            && typeof SVGGeometryElement.prototype.isPointInStroke === 'function';
+    });
+}
+function hasClipboardWrite() {
+    return safe(function () {
+        return !!navigator.clipboard
+            && typeof navigator.clipboard.writeText === 'function';
+    });
+}
+function hasCssEscape() {
+    return safe(function () {
+        return typeof window.CSS !== 'undefined'
+            && typeof CSS.escape === 'function';
+    });
+}
+function hasMatchMediaListener() {
+    return safe(function () {
+        if (!window.matchMedia) return false;
+        var mq = window.matchMedia('(min-width: 1px)');
+        return typeof mq.addEventListener === 'function';
+    });
+}
+function hasModernMath() {
+    return typeof Math.hypot === 'function'
+        && typeof Math.trunc === 'function'
+        && typeof Math.fround === 'function'
+        && typeof Math.sign === 'function';
+}
+function hasDialogShowModal() {
+    return safe(function () {
+        return typeof document.createElement('dialog').showModal === 'function';
+    });
+}
+function hasTextDecoder() {
+    return safe(function () {
+        if (typeof window.TextDecoder !== 'function') return false;
+        var d = new TextDecoder('utf-8', { fatal: true });
+        return typeof d.decode === 'function';
+    });
+}
+
+/* CSS 探测：优先 CSS.supports，退化到 style 赋值 */
+function cssSupports(prop, value) {
+    if (window.CSS && typeof CSS.supports === 'function') {
+        try { return CSS.supports(prop, value); } catch (e) {}
+    }
+    return safe(function () {
+        var el = document.createElement('div');
+        if (!el.style) return false;
+        if (prop.indexOf('--') === 0) {
+            if (typeof el.style.setProperty !== 'function') return false;
+            el.style.setProperty(prop, value);
+            return el.style.getPropertyValue(prop) !== '';
+        }
+        var camel = prop.replace(/-([a-z])/g, function (m, c) {
+            return c.toUpperCase();
+        });
+        if (!(camel in el.style)) return false;
+        el.style[camel] = value;
+        return el.style[camel] !== '' && el.style[camel] !== undefined;
+    });
+}
+function selectorSupports(sel) {
+    if (window.CSS && typeof CSS.supports === 'function') {
+        try { return CSS.supports('selector(' + sel + ')'); } catch (e) {}
+    }
+    if (typeof document.querySelector !== 'function') return false;
+    return safe(function () { document.querySelector(sel); return true; });
+}
+function mediaSupports(q) {
+    return safe(function () {
+        if (!window.matchMedia) return false;
+        return window.matchMedia(q).media !== 'not all';
+    });
+}
+function flexGapSupported() {
+    return safe(function () {
+        var el = document.createElement('div');
+        el.style.cssText = 'display:flex;flex-direction:column;gap:10px;'
+            + 'position:absolute;left:-9999px;top:0;visibility:hidden;';
+        var a = document.createElement('div'),
+            b = document.createElement('div');
+        a.style.height = '10px';
+        b.style.height = '10px';
+        el.appendChild(a);
+        el.appendChild(b);
+        document.body.appendChild(el);
+        var h = el.offsetHeight;
+        document.body.removeChild(el);
+        return h === 30;
+    });
+}
+function backdropFilterSupported() {
+    return cssSupports('backdrop-filter', 'blur(4px)')
+        || cssSupports('-webkit-backdrop-filter', 'blur(4px)');
+}
+
+/* ============ 检测清单 ============ */
+/* severity: fatal = 核心 API，缺失则依赖它的脚本无法运行
+             visual = 缺失只影响对应视觉效果或交互体验 */
+var JS_CHECKS = [
+    { name: 'structuredClone',            severity: 'fatal',  test: function () { return typeof window.structuredClone === 'function'; }, desc: '深拷贝对象（结构化克隆），历史记录与状态快照依赖' },
+    { name: '可选链 ?. / 空值合并 ??',    severity: 'fatal',  test: hasOptionalChaining,       desc: '语法级特性，缺失则相关模块无法解析' },
+    { name: 'async / await',              severity: 'fatal',  test: hasAsync,                  desc: '异步函数语法，缺失则相关模块无法解析' },
+    { name: 'ES Module (type="module")',  severity: 'fatal',  test: hasModule,                 desc: '以原生模块方式加载脚本' },
+    { name: '\\p{L} Unicode 正则',        severity: 'fatal',  test: hasRegexUnicodeProp,       desc: '按 Unicode 字母属性匹配标识符' },
+    { name: 'Array.prototype.flatMap',    severity: 'fatal',  test: hasFlatMap,                desc: '数组扁平映射，表达式引用解析使用' },
+    { name: 'String.prototype.padStart',  severity: 'fatal',  test: hasPadStart,               desc: '字符串前补零，颜色十六进制输出使用' },
+    { name: 'Object.hasOwn',              severity: 'visual', test: hasObjectHasOwn,           desc: '判断对象自有属性' },
+    { name: 'Array.prototype.at',         severity: 'visual', test: hasArrayAt,                desc: '按索引取数组元素，支持负数下标' },
+    { name: 'Object.fromEntries',         severity: 'visual', test: hasFromEntries,            desc: '由键值对数组构造对象' },
+    { name: 'BigInt + getBigUint64',      severity: 'visual', test: hasBigIntDataView,         desc: '大整数运算与读取 64 位浮点位模式' },
+    { name: 'String.prototype.trimStart', severity: 'visual', test: hasTrimStart,              desc: '去除字符串首部空白' },
+    { name: 'PointerEvent / 指针捕获',    severity: 'visual', test: hasPointerEvents,          desc: '统一的鼠标、触摸、手写笔事件与拖拽捕获' },
+    { name: 'Element.closest',            severity: 'visual', test: hasClosest,                desc: '向上查找匹配的祖先元素' },
+    { name: 'DOMPoint',                   severity: 'visual', test: hasDOMPoint,               desc: '二维坐标点对象，用于命中测试' },
+    { name: 'SVG isPointInFill/Stroke',   severity: 'visual', test: hasSvgHitTest,             desc: '判断坐标是否落在填充区域或描边内' },
+    { name: 'navigator.clipboard.writeText', severity: 'visual', test: hasClipboardWrite,     desc: '异步写入系统剪贴板' },
+    { name: 'CSS.escape',                 severity: 'visual', test: hasCssEscape,              desc: '转义选择器中的特殊字符' },
+    { name: 'matchMedia().addEventListener', severity: 'visual', test: hasMatchMediaListener,  desc: '监听媒体查询变化（如系统深浅色）' },
+    { name: 'Math.hypot / trunc / fround / sign', severity: 'visual', test: hasModernMath,    desc: '几何距离、取整、单精度舍入与符号判断' },
+    { name: 'dialog.showModal()',         severity: 'visual', test: hasDialogShowModal,        desc: '原生模态对话框' },
+    { name: 'TextDecoder(fatal)',         severity: 'visual', test: hasTextDecoder,            desc: '严格按 UTF-8 解码字节流，非法字节直接报错' }
+];
+
+var CSS_CHECKS = [
+    { name: 'CSS 自定义属性 var()',        severity: 'visual', test: function () { return cssSupports('--x', '0'); }, desc: '主题色与尺寸变量' },
+    { name: 'color-mix()',                severity: 'visual', test: function () { return cssSupports('color', 'color-mix(in srgb, red 50%, blue)'); }, desc: '在两个颜色之间按比例混合' },
+    { name: 'mix-blend-mode: plus-lighter', severity: 'visual', test: function () { return cssSupports('mix-blend-mode', 'plus-lighter'); }, desc: '线性减淡混合模式' },
+    { name: 'backdrop-filter',            severity: 'visual', test: backdropFilterSupported,    desc: '对元素背后的内容施加模糊等滤镜' },
+    { name: 'Flexbox gap',                severity: 'visual', test: flexGapSupported,          desc: '弹性布局中设置项目间距' },
+    { name: 'inset 简写',                 severity: 'visual', test: function () { return cssSupports('inset', '0'); }, desc: '一次性设置四边偏移量' },
+    { name: ':focus-visible',             severity: 'visual', test: function () { return selectorSupports(':focus-visible'); }, desc: '仅在键盘操作时显示焦点样式' },
+    { name: 'accent-color',               severity: 'visual', test: function () { return cssSupports('accent-color', 'red'); }, desc: '原生表单控件的强调色' },
+    { name: 'overflow-wrap: anywhere',    severity: 'visual', test: function () { return cssSupports('overflow-wrap', 'anywhere'); }, desc: '任意位置强制换行，避免长串溢出' },
+    { name: '@media (prefers-color-scheme)', severity: 'visual', test: function () { return mediaSupports('(prefers-color-scheme: dark)'); }, desc: '跟随系统浅色 / 深色偏好' },
+    { name: '@media (prefers-reduced-motion)', severity: 'visual', test: function () { return mediaSupports('(prefers-reduced-motion: reduce)'); }, desc: '尊重用户“减少动效”的系统设置' },
+    { name: 'isolation: isolate',         severity: 'visual', test: function () { return cssSupports('isolation', 'isolate'); }, desc: '创建独立堆叠上下文' },
+    { name: 'touch-action: none',         severity: 'visual', test: function () { return cssSupports('touch-action', 'none'); }, desc: '阻止浏览器的默认触摸手势' },
+    { name: '::backdrop',                 severity: 'visual', test: function () { return selectorSupports('::backdrop'); }, desc: '模态对话框背后遮罩层的样式' },
+    { name: ':scope 选择器',              severity: 'visual', test: function () { return selectorSupports(':scope'); }, desc: '限定在某个元素内部查询' },
+    { name: 'radial-gradient()',          severity: 'visual', test: function () { return cssSupports('background-image', 'radial-gradient(red, blue)'); }, desc: '径向渐变背景' }
+];
+
+function iconHtml(status) {
+    var fa = status === 'ok' ? 'fa-check-circle'
+           : status === 'warn' ? 'fa-exclamation-triangle'
+           : 'fa-times-circle';
+    var glyph = status === 'ok' ? '&#8730;'
+              : status === 'warn' ? '!'
+              : '&times;';
+    return '<i class="fa ' + fa + '"></i>'
+         + '<span class="legacy-icon ' + status + '">' + glyph + '</span>';
+}
+
+function addEnvRow(tbody, label, value, extraClass) {
+    var row = tbody.insertRow(-1);
+    var th = document.createElement('th');
+    th.innerHTML = label;
+    row.appendChild(th);
+    var td = row.insertCell(-1);
+    if (extraClass) td.className = extraClass;
+    td.innerHTML = value;
+}
+
+function addCheckRow(tbody, name, status, desc) {
+    var row = tbody.insertRow(-1);
+    var cellName = row.insertCell(-1);
+    cellName.innerHTML = escapeHtml(name);
+    var cellStatus = row.insertCell(-1);
+    cellStatus.className = 'status-cell';
+    cellStatus.innerHTML = iconHtml(status);
+    var cellDesc = row.insertCell(-1);
+    cellDesc.innerHTML = escapeHtml(desc);
+}
+
+function runChecks(checks, tbody) {
+    var fatalFail = 0, visualFail = 0, i, c, ok, status;
+    for (i = 0; i < checks.length; i++) {
+        c = checks[i];
+        ok = false;
+        try { ok = !!c.test(); } catch (e) { ok = false; }
+        if (ok) {
+            status = 'ok';
+        } else if (c.severity === 'fatal') {
+            status = 'fail';
+            fatalFail++;
+        } else {
+            status = 'warn';
+            visualFail++;
+        }
+        addCheckRow(tbody, c.name, status, c.desc);
+    }
+    return { fatalFail: fatalFail, visualFail: visualFail };
+}
+
+var env = collectEnvironment();
+var envTable = document.getElementById('envTable');
+for (var i = 0; i < env.length; i++) {
+    addEnvRow(envTable, env[i][0], env[i][1], env[i][2]);
+}
+
+var jsResult  = runChecks(JS_CHECKS,  document.getElementById('jsTable'));
+var cssResult = runChecks(CSS_CHECKS, document.getElementById('cssTable'));
+
+var summary = document.getElementById('summary');
+var fatalFail  = jsResult.fatalFail;
+var visualFail = jsResult.visualFail + cssResult.visualFail;
+
+if (fatalFail > 0) {
+    summary.className = 'summary fail';
+    summary.innerHTML = iconHtml('fail')
+        + ' 缺少 ' + fatalFail + ' 项核心 API，依赖这些 API 的脚本将无法运行';
+} else if (visualFail > 0) {
+    summary.className = 'summary warn';
+    summary.innerHTML = iconHtml('warn')
+        + ' 核心 API 齐全，但有 ' + visualFail + ' 缺失，相关效果会降级';
+} else {
+    summary.className = 'summary ok';
+    summary.innerHTML = iconHtml('ok')
+        + ' 当前浏览器可以正常运行我们提供的服务';
+}
+</script>
+</body>
+</html>
